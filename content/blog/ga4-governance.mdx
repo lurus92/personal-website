@@ -1,0 +1,15 @@
+---
+title: "GA4 governance checklist for enterprise teams"
+date: "2024-10-15"
+tags: ["analytics", "ga4", "governance"]
+summary: "Practical guardrails to keep GA4 implementations trustworthy across multiple markets and squads."
+---
+
+When GA4 projects scale across brands and markets, the biggest risk is entropy. Different squads tweak events, naming slips, and soon dashboards drift. This checklist keeps implementations clean:
+
+1. **Name everything with intent.** Adopt a measurement taxonomy that ties events to business outcomes, not just UI clicks.
+2. **Lock down tag managers.** Use approvals and environments in GTM/Tealium; document who owns each container.
+3. **Automate validation.** Lint your data layer, run nightly payload checks, and alert on contract breaks.
+4. **Version and test.** Ship changes behind QA/preview, then promote to production with release notes.
+
+A modest investment in governance saves months of cleanup and stakeholder trust.

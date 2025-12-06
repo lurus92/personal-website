@@ -1,0 +1,14 @@
+---
+title: "Server-side tagging without breaking experimentation"
+date: "2024-05-20"
+tags: ["tagging", "experimentation", "tealium"]
+summary: "How to move to server-side tagging while keeping A/B testing, consent, and performance healthy."
+---
+
+Server-side tagging reduces client bloat, but it introduces new risks for experimentation and consent. To keep experiments trustworthy:
+
+- Mirror your client-side experiment IDs into the server payload so results stay aligned.
+- Keep consent state authoritative on the client; pass it downstream explicitly.
+- Implement payload validation so events failing schema checks are surfaced, not silently dropped.
+
+The payoff: faster pages, higher data quality, and experiments that still ship on time.

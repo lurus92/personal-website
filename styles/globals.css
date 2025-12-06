@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-sand text-ink font-sans antialiased;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+a {
+  @apply text-accent hover:text-ink transition-colors;
+}
+
+.prose h1 {
+  @apply text-4xl font-bold mb-4;
+}
+
+.prose h2 {
+  @apply text-2xl font-semibold mt-8 mb-4;
+}
+
+.prose h3 {
+  @apply text-xl font-semibold mt-6 mb-3;
+}
+
+.prose p {
+  @apply mb-4 leading-relaxed;
+}
+
+.prose ul {
+  @apply list-disc ml-6 mb-4 space-y-2;
+}
+
+.prose ol {
+  @apply list-decimal ml-6 mb-4 space-y-2;
+}
+
+.prose code {
+  @apply bg-slate-100 px-1 py-0.5 rounded text-sm font-mono;
+}
+
+.prose pre {
+  @apply bg-slate-900 text-slate-50 p-4 rounded-lg overflow-x-auto text-sm;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-accent pl-4 italic text-slate-700;
+}
+
+.tag {
+  @apply inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full bg-slate-200 text-slate-700;
+}
+
+.section-title {
+  @apply text-3xl font-semibold text-ink mb-4;
+}
+
+.card {
+  @apply bg-white shadow-sm rounded-2xl border border-slate-100 p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-200;
+}
+
+.button-primary {
+  @apply inline-flex items-center justify-center px-4 py-2 rounded-lg bg-ink text-white font-semibold hover:bg-slate-900 transition-colors;
+}
+
+.button-secondary {
+  @apply inline-flex items-center justify-center px-4 py-2 rounded-lg border border-slate-200 text-ink font-semibold hover:bg-slate-50 transition-colors;
+}
