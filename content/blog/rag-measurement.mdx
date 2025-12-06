@@ -1,0 +1,22 @@
+---
+title: "Using RAG to debug analytics implementations"
+date: "2025-02-10"
+tags: ["ai", "rag", "analytics"]
+summary: "How retrieval-augmented generation can compress implementation docs into a reliable QA assistant."
+---
+
+## The pain
+
+Implementation docs live in wikis, sheets, and scattered tickets. When an event fails QA, teams lose hours reconciling the truth.
+
+## The approach
+
+1. Ingest tracking plans, data layer specs, and dashboards into a vector store.
+2. Use OpenAI functions to inspect payloads and compare against the documented contract.
+3. Return a concise assessment: expected parameters, missing fields, and links to owners.
+
+## Where it shines
+
+- During GA4 or Adobe migrations when teams juggle multiple schemas.
+- For agencies that need to ship QA at pace without drowning in spreadsheets.
+- As a safety net before deploying experiments to production.
