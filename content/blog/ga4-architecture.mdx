@@ -1,0 +1,24 @@
+---
+title: "Building resilient GA4 architectures"
+date: "2024-11-15"
+tags: ["analytics", "ga4", "tagging"]
+summary: "A practical blueprint for instrumenting GA4 with governance, consent, and performance in mind."
+---
+
+## Why foundations matter
+
+The fastest way to slow a growth team is to ship dashboards on top of fragile tracking. I start every engagement with a measurement contract: events, parameters, and KPIs with owners and definitions.
+
+## Components I standardize
+
+- **Server-side tagging** to protect page performance and enable data controls.
+- **Namespace discipline** for events and parameters so analysts can query with confidence.
+- **Consent-aware tagging** that avoids dark patterns and keeps legal teams aligned.
+
+## Rollout checklist
+
+1. Audit existing tags and dependencies.
+2. Document the desired GA4 schema with examples.
+3. Set up GTM or Tealium with environments and governance.
+4. Pair with engineers to ship instrumentation as code.
+5. Monitor with automated QA and alerting.
