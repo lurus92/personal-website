@@ -1,0 +1,42 @@
+export const projects = [
+  {
+    slug: "exambot",
+    name: "ExamBot",
+    status: "Active",
+    summary: "AI assistant that drafts, auto-marks, and personalizes exams for educators and students.",
+    tech: ["TypeScript", "OpenAI", "Firebase"],
+    outcomes: ["Cut exam creation time by 70%", "Automated grading with transparent rubrics", "Classroom analytics dashboards"],
+  },
+  {
+    slug: "wingman",
+    name: "Wingman",
+    status: "Beta",
+    summary: "Browser-side copilot for analytics teams: faster QA, tag health checks, and consent-aware debugging.",
+    tech: ["Chrome APIs", "GA4", "GTM"],
+    outcomes: ["Detects broken tags before launch", "Consent-aware data collection", "Exportable QA evidence"],
+  },
+  {
+    slug: "cast",
+    name: "Cast",
+    status: "Research",
+    summary: "Pipeline that turns interviews into structured research nuggets with retrieval-ready vectors.",
+    tech: ["Next.js", "Whisper", "Pinecone"],
+    outcomes: ["Audio-to-insight in minutes", "Searchable quotes and highlights", "Team-friendly research boards"],
+  },
+  {
+    slug: "inquiro",
+    name: "Inquiro (AskVio)",
+    status: "Active",
+    summary: "Executive-facing analytics bot that answers questions using governed tracking dictionaries.",
+    tech: ["Python", "OpenAI", "Metabase"],
+    outcomes: ["Self-serve answers for leadership", "Contextualizes metrics with definitions", "Reduces ad-hoc ticket load"],
+  },
+  {
+    slug: "ora",
+    name: "Ora",
+    status: "Concept",
+    summary: "Personal experimentation notebook to ship A/B tests faster without losing analytical rigor.",
+    tech: ["Supabase", "TypeScript", "Adobe Target"],
+    outcomes: ["Standardized test briefs", "Guardrails for uplift calculations", "Auto-generated learnings"],
+  },
+];
