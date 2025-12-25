@@ -41,6 +41,11 @@ a {
   @apply list-decimal ml-6 mb-4 space-y-2;
 }
 
+.prose ul li,
+.prose ol li {
+  @apply list-item;
+}
+
 .prose code {
   @apply bg-slate-100 px-1 py-0.5 rounded text-sm font-mono;
 }

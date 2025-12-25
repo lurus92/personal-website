@@ -35,7 +35,8 @@ export const getStaticProps: GetStaticProps = async () => {
     status: project.data.status,
     tags: project.data.tags,
     summary: project.data.summary,
-    techStack: project.data.techStack
+    techStack: project.data.techStack,
+    icon: project.data.icon
   }));
 
   return {

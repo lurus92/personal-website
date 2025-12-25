@@ -1,4 +1,6 @@
+import Image from 'next/image';
 import Link from 'next/link';
+import luigiPortrait from '../public/images/luigi.jpg';
 
 const Hero = () => {
   return (
@@ -32,8 +34,15 @@ const Hero = () => {
         </div>
       </div>
       <div className="card space-y-4 bg-gradient-to-br from-slate-50 to-white">
-        <div className="aspect-square rounded-xl bg-slate-200 flex items-center justify-center text-slate-600 text-sm">
-          <span>Portrait placeholder: Luigi speaking at analytics meetup</span>
+        <div className="relative aspect-square rounded-xl overflow-hidden border border-slate-200">
+          <Image
+            src={luigiPortrait}
+            alt="Luigi Russo"
+            fill
+            className="object-cover"
+            sizes="(min-width: 768px) 420px, 100vw"
+            priority
+          />
         </div>
         <div className="space-y-3">
           <p className="text-slate-700 leading-relaxed">

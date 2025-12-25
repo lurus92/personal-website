@@ -3,6 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
+import remarkGfm from 'remark-gfm';
 
 export interface ContentItem {
   slug: string;
@@ -32,7 +33,8 @@ export async function getPostBySlug(slug: string) {
   const fullPath = path.join(BLOG_PATH, `${realSlug}.mdx`);
   const fileContents = fs.readFileSync(fullPath, 'utf-8');
   const { data, content } = matter(fileContents);
-  const processed = await remark().use(html).process(content);
+  // @ts-expect-error Type definitions for remark plugins are slightly misaligned
+  const processed = await remark().use(remarkGfm).use(html).process(content);
   const contentHtml = processed.toString();
 
   return { slug: realSlug, frontmatter: data, content: contentHtml };
@@ -56,7 +58,8 @@ export async function getProjectBySlug(slug: string) {
   const fullPath = path.join(PROJECTS_PATH, `${realSlug}.mdx`);
   const fileContents = fs.readFileSync(fullPath, 'utf-8');
   const { data, content } = matter(fileContents);
-  const processed = await remark().use(html).process(content);
+  // @ts-expect-error Type definitions for remark plugins are slightly misaligned
+  const processed = await remark().use(remarkGfm).use(html).process(content);
   const contentHtml = processed.toString();
 
   return { slug: realSlug, frontmatter: data, content: contentHtml };

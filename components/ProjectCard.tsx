@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 export interface ProjectMeta {
@@ -7,6 +8,7 @@ export interface ProjectMeta {
   tags: string[];
   summary: string;
   techStack: string[];
+  icon?: string;
 }
 
 interface ProjectCardProps {
@@ -27,9 +29,21 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             ))}
           </div>
         </div>
-        <div className="w-16 h-16 rounded-xl bg-slate-200 flex items-center justify-center text-xs text-slate-600">
-          <span>{project.techStack[0]}</span>
-        </div>
+        {project.icon ? (
+          <div className="w-16 h-16 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center">
+            <Image
+              src={`/images/${project.icon}`}
+              alt={`${project.name} icon`}
+              width={64}
+              height={64}
+              className="object-contain"
+            />
+          </div>
+        ) : (
+          <div className="w-16 h-16 rounded-xl bg-slate-200 flex items-center justify-center text-xs text-slate-600">
+            <span>{project.techStack[0]}</span>
+          </div>
+        )}
       </div>
     </Link>
   );
