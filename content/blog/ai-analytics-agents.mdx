@@ -11,4 +11,10 @@ Analytics work is messy: ambiguous questions, missing context, and constant back
 - Integrate with your BI or CDP APIs to run real queries.
 - Respect governance: log actions, request confirmation, and keep humans in control.
 
+Here&apos;s a simple build workflow to keep scope tight:
+
+1. **Pick one workflow.** Instrument a single task (e.g., campaign QA) with clear inputs and outputs.
+2. **Wire only the trusted systems.** Start with read-only access, then progressively add write actions behind confirmation.
+3. **Ship a shadow mode.** Let analysts compare the assistant&apos;s output against their own work before fully delegating.
+
 When assistants are grounded in data contracts and observability, they become co-pilots instead of novelty demos.
