@@ -5,17 +5,17 @@ const About = () => {
   return (
     <Layout title="About" description="Learn about Luigi Russo's background, career, and approach to analytics and AI products.">
       <div className="space-y-12">
-        <Section title="Biography" eyebrow="About Luigi" description="Analytics and marketing technology leader with a builder mindset.">
+        <Section title="Biography" eyebrow="About Luigi" description="I’m an analytics and marketing technology leader with a builder mindset.">
           <div className="grid md:grid-cols-3 gap-8 items-start">
             <div className="card space-y-4 md:col-span-2">
               <p className="text-slate-700 leading-relaxed">
-                Luigi Russo is based in Zurich and works globally across Milan and Dubai. With more than a decade of experience in digital analytics, tag management, and experimentation, he has led teams and implementations in fast-moving environments including social, telecom, retail, and travel/e-commerce.
+                I&apos;m based in Zurich and work globally across Milan and Dubai. With more than a decade in digital analytics, tag management, and experimentation, I&apos;ve led teams and implementations in fast-moving environments including social, telecom, retail, and travel/e-commerce.
               </p>
               <p className="text-slate-700 leading-relaxed">
-                He combines strategy with hands-on delivery: setting measurement frameworks, governing GTM/Tealium containers, rolling out GA4 and Adobe Analytics, and building AI-powered products. Luigi studied Computer Science and Engineering (BSc and MSc) at Politecnico di Milano and writes science fiction on the side.
+                I combine strategy with hands-on delivery: setting measurement frameworks, governing GTM/Tealium containers, rolling out GA4 and Adobe Analytics, and building AI-powered products. I studied Computer Science and Engineering (BSc and MSc) at Politecnico di Milano and write science fiction on the side.
               </p>
               <p className="text-slate-700 leading-relaxed">
-                He thrives when helping teams trust their data and shipping experiments that actually move business metrics. Recent roles include work with TikTok, large telecom operators, and leading retailers.
+                I thrive when helping teams trust their data and shipping experiments that actually move business metrics. Recent roles include work with TikTok, large telecom operators, and leading retailers.
               </p>
             </div>
             <div className="space-y-4">
@@ -34,20 +34,20 @@ const About = () => {
           </div>
         </Section>
 
-        <Section title="Approach" description="A hybrid of strategist, technologist, and indie product builder.">
+        <Section title="Approach" description="I blend strategist, technologist, and indie product builder mindsets.">
           <div className="grid md:grid-cols-3 gap-6">
             {[ 
               {
                 title: 'Strategy + governance',
-                copy: 'Designs measurement plans, taxonomies, and governance to keep tracking reliable as products scale.'
+                copy: 'I design measurement plans, taxonomies, and governance to keep tracking reliable as products scale.'
               },
               {
                 title: 'Hands-on implementation',
-                copy: 'Deploys GTM/Tealium setups, debugging, server-side tagging, and analytics migrations without hand-offs.'
+                copy: 'I deploy GTM/Tealium setups, debugging, server-side tagging, and analytics migrations without hand-offs.'
               },
               {
                 title: 'Product shipping',
-                copy: 'Builds AI-first tools (RAG assistants, copilots, data products) with user-centric experimentation.'
+                copy: 'I build AI-first tools (RAG assistants, copilots, data products) with user-centric experimentation.'
               }
             ].map((item) => (
               <div key={item.title} className="card space-y-3">

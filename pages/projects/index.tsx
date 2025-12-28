@@ -14,8 +14,8 @@ const ProjectsPage = ({ projects }: ProjectsProps) => {
       <div className="space-y-12">
         <Section
           eyebrow="Russo Technologies"
-          title="Product lab"
-          description="AI-first products that merge analytics rigor with user-centric design."
+          title="My product lab"
+          description="AI-first products I&apos;m building hands-on, merging analytics rigor with user-centric design."
         >
           <div className="grid md:grid-cols-2 gap-6">
             {projects.map((project) => (

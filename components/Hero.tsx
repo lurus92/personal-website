@@ -7,16 +7,26 @@ const Hero = () => {
     <section className="grid md:grid-cols-2 gap-10 items-center">
       <div className="space-y-6">
         <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-slate-200 text-sm font-semibold text-slate-800">
-          <span>Analytics Leader</span>
+          <span>Analytics leader</span>
           <span className="text-slate-500">&</span>
-          <span>AI Product Builder</span>
+          <span>AI product builder</span>
         </div>
-        <h1 className="text-4xl md:text-5xl font-bold text-ink leading-tight">
-          Luigi Russo builds trustworthy analytics and ships AI-first products.
-        </h1>
+        <div className="space-y-3">
+          <h1 className="text-4xl md:text-5xl font-bold text-ink leading-tight">
+            Hi, I&apos;m Luigi Russo.
+          </h1>
+          <p className="text-xl md:text-2xl font-semibold uppercase leading-snug tracking-tight text-ink">
+            I love to analyse people needs.
+            <br />
+            Spot business opportunities.
+            <br />
+            Engineer complex software.
+          </p>
+        </div>
         <p className="text-lg text-slate-700 leading-relaxed">
-          Zurich-based, Milan- and Dubai-rooted technology leader with 10+ years across GTM, GA4, Adobe Analytics, Tealium, and
-          experimentation. Luigi blends hands-on implementation with strategy to ship data products that actually get used.
+          I turn messy tracking into trustworthy analytics and ship AI-first products that teams actually use. Zurich-based
+          with roots in Milan and Dubai, I blend GTM, GA4, Adobe Analytics, Tealium, and experimentation with hands-on
+          engineering to get ideas into production.
         </p>
         <div className="flex flex-wrap gap-4">
           <Link href="/contact" className="button-primary">Book a call</Link>

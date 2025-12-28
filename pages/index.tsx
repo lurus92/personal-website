@@ -20,22 +20,22 @@ export default function Home({ projects, posts }: HomeProps) {
 
         <Section
           eyebrow="Consulting"
-          title="Analytics, experimentation, and data activation"
-          description="Hands-on help with measurement strategy, tracking quality, CDP and tag management, and building AI-enabled customer journeys."
+          title="I design analytics, experimentation, and data activation that work"
+          description="When you bring me in, I roll up my sleeves—fixing tracking foundations, sharpening measurement strategy, and building AI-enabled journeys that teams can trust."
         >
           <div className="grid md:grid-cols-3 gap-4">
             {[
               {
                 title: 'Analytics foundations',
-                items: ['GTM & Tealium governance', 'GA4 & Adobe Analytics implementations', 'Tracking quality audits']
+                items: ['I govern GTM & Tealium at scale', 'I roll out GA4 & Adobe Analytics', 'I run tracking quality audits']
               },
               {
                 title: 'Experimentation & CRO',
-                items: ['Testing roadmaps', 'Adobe Target / Optimizely setups', 'Measurement for growth teams']
+                items: ['I build testing roadmaps', 'I set up Adobe Target / Optimizely', 'I anchor measurement for growth teams']
               },
               {
                 title: 'AI & product labs',
-                items: ['RAG and agentic assistants', 'Data products with OpenAI', 'Full-stack prototypes']
+                items: ['I craft RAG and agentic assistants', 'I ship data products with OpenAI', 'I deliver full-stack prototypes']
               }
             ].map((area) => (
               <div key={area.title} className="card space-y-3">
@@ -59,7 +59,7 @@ export default function Home({ projects, posts }: HomeProps) {
         <Section
           eyebrow="Russo Technologies Lab"
           title="AI products and experiments"
-          description="Selected independent products that apply analytics rigor to AI experiences. Each project is built hands-on by Luigi."
+          description="These are the products and experiments I’m building hands-on, applying analytics rigor to every AI experience."
         >
           <div className="grid md:grid-cols-2 gap-6">
             {projects.slice(0, 4).map((project) => (
@@ -74,7 +74,7 @@ export default function Home({ projects, posts }: HomeProps) {
         <Section
           eyebrow="Analytics Notes"
           title="Latest thinking"
-          description="Essays on measurement strategy, implementation patterns, and AI in marketing analytics."
+          description="Fresh notes I’m writing on measurement strategy, implementation patterns, and AI in marketing analytics."
         >
           <div className="grid md:grid-cols-3 gap-6">
             {posts.slice(0, 3).map((post) => (
