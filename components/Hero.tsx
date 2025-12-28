@@ -21,6 +21,7 @@ const Hero = () => {
         <div className="flex flex-wrap gap-4">
           <Link href="/contact" className="button-primary">Book a call</Link>
           <Link href="/projects" className="button-secondary">Explore the lab</Link>
+          <Link href="/CV-LuigiRusso.pdf" className="button-secondary" download>Download CV</Link>
         </div>
         <div className="grid grid-cols-2 gap-4 text-sm text-slate-600">
           <div>
