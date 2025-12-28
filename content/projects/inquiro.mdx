@@ -1,11 +1,34 @@
 ---
-slug: "inquiro"
-name: "Inquiro (AskVio)"
-status: "Active"
-tags: ["AI", "Analytics", "Assistant"]
-summary: "Analytics research assistant that reads dashboards, PRDs, and taxonomies before answering."
-techStack: ["Next.js", "PostgreSQL", "OpenAI"]
+slug: "askvio"
+name: "AskVio"
+status: "Active — MVP"
+tags: ["AI", "Search", "Knowledge Base", "B2B", "RAG"]
+summary: "An embeddable AI-powered search assistant that lets users query websites and documents conversationally, with accurate, source-grounded answers."
+techStack: ["JavaScript", "Firebase", "Cloud Functions", "Vector DB", "OpenAI"]
 icon: "askvio-icon.png"
+
 ---
 
-Inquiro connects to BI tools, analytics specs, and experiment logs to give grounded answers to marketing and product teams. It uses retrieval tuned on measurement plans so responses reference the exact metrics and segments you trust.
+**AskVio** is an AI-powered conversational search widget designed to sit directly on top of existing websites and documentation, turning static content into an interactive, queryable knowledge base.
+
+The problem AskVio addresses is structural, not cosmetic. Most websites still rely on traditional search boxes, rigid navigation trees, and FAQs that don’t scale with content growth. Users don’t want to *browse* anymore — they want to *ask*. And companies don’t want to rebuild their entire information architecture just to enable that.
+
+AskVio acts as a thin but powerful layer between users and content. It ingests website pages and documents (PDFs, guides, help articles), indexes them, and exposes a **GPT-like conversational interface** that answers questions using only the available sources — not generic internet knowledge.
+
+A key design principle is **groundedness**. AskVio is not a chatbot that hallucinates confidently. Every answer is derived from indexed content, making it suitable for customer support, documentation, onboarding, and internal knowledge use cases. If the answer is not present in the source material, AskVio says so.
+
+From a technical perspective, AskVio is intentionally modular:
+
+* An **embeddable JavaScript widget** (HTML/JS tag) that can be dropped into any site
+* A backend built on **Firebase and Cloud Functions** for routing, logging, and multi-tenancy
+* A **RAG pipeline** backed by a vector database to store embeddings and retrieve relevant content
+* **OpenAI models** used selectively to balance cost, latency, and answer quality
+
+One of the core challenges in building AskVio was cost discipline. Conversational search scales with usage, not users. This led to a **usage-based pricing mindset** from the start, with clear boundaries around query volume, ingestion limits, and response complexity.
+
+AskVio is also intentionally brand-agnostic. It’s not a “chatbot personality.” It adapts visually and tonally to the host website, behaving more like an **AI interface component** than a standalone product.
+
+On a personal level, AskVio represents a shift toward **infrastructure thinking**. Unlike consumer apps, its success depends less on UX delight and more on reliability, accuracy, and predictable behavior. Building it forced careful decisions around multi-tenancy, isolation, analytics, and observability — all the things that matter once software is meant to be embedded into other products.
+
+AskVio is still an MVP, but the direction is clear:
+it’s not about replacing search — it’s about making information finally accessible in the way users already think and speak.

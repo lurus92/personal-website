@@ -1,14 +1,39 @@
 ---
 slug: "exambot"
 name: "ExamBot"
-status: "Active"
-tags: ["AI", "EdTech", "SaaS"]
-summary: "AI that generates and corrects exams for students and teachers."
-techStack: ["Next.js", "Firebase", "OpenAI"]
+status: "Live — Production"
+tags: ["Education", "EdTech", "AI", "Assessment", "Learning"]
+summary: "An AI-powered platform that generates, corrects, and explains exams automatically, helping students study smarter and educators save time."
+techStack: ["Firebase", "Cloud Functions", "OpenAI", "Stripe", "JavaScript"]
 icon: "exambot-icon.png"
 heroImage: "exambot-hero.png"
 screenshots:
   - "exambot-screen-1.jpg"
 ---
 
-ExamBot helps educators create personalized assessments and instantly review answers. It uses retrieval to keep question banks aligned to curriculum, and server-side scoring to avoid leaking prompts. Analytics instrumentation tracks question difficulty, completion rates, and feedback to improve the assistant over time.
+**ExamBot** is an AI-driven platform designed to automate one of the most time-consuming and cognitively expensive parts of education: **exam creation and correction**.
+
+The original problem was very concrete. Exams are expensive to design well, slow to correct, and often provide poor feedback. On the student side, most tools stop at “practice questions” without real evaluation. On the educator side, assessment scales badly. ExamBot sits exactly in that gap.
+
+The core value proposition is simple:
+
+* generate structured exams on demand,
+* correct them automatically,
+* and provide **clear, pedagogical feedback**, not just a score.
+
+From day one, the focus was on **usefulness over novelty**. ExamBot does not try to replace teachers or invent new pedagogy. It accelerates what already works. Users can define subject, difficulty, format, and constraints, and the system produces exams that are coherent, balanced, and correctable by design.
+
+Technically, ExamBot was built with a **production-first mindset**:
+
+* **Firebase** for authentication, persistence, and scalability
+* **Cloud Functions** to orchestrate exam generation, correction, and scoring pipelines
+* **OpenAI models** for content generation, reasoning, and explanation
+* **Stripe** for real payments, with cost-aware onboarding to keep API usage sustainable
+
+One important architectural decision was to put **user registration before exam creation**. This wasn’t a growth hack — it was a necessity. Generating and correcting exams is expensive, and ExamBot treats AI calls as a real production cost, not an abstract one. This constraint shaped both UX and business logic in a disciplined way.
+
+Another deliberate choice was transparency. ExamBot explains *why* an answer is wrong, not just that it is. The goal is learning, not automation for its own sake. If a correction cannot be explained clearly, it’s not good enough.
+
+On a personal level, ExamBot represents a shift from “AI experiments” to **shipping a real product with real users and real costs**. It forced decisions about pricing, limits, abuse prevention, and UX trade-offs — the unglamorous parts of building something that actually runs in production.
+
+ExamBot is live, evolving, and intentionally focused. It’s not an edtech platform trying to do everything. It does one thing well: it turns exams from a bottleneck into a scalable, intelligible process.

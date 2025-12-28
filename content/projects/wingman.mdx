@@ -1,10 +1,10 @@
 ---
 slug: "wingman"
 name: "Wingman"
-status: "In beta"
-tags: ["AI", "Productivity", "Copilot"]
-summary: "Agentic copilot that drafts analytics tickets and QA steps from conversations."
-techStack: ["Next.js", "Supabase", "OpenAI"]
+status: "Active — In Development"
+tags: ["Dating", "AI", "Social", "Matching", "Psychometrics"]
+summary: "An AI-driven dating app focused on deep compatibility and intentional introductions, removing swiping and superficial matching dynamics."
+techStack: ["Firebase", "Cloud Functions", "OpenAI", "Mobile App"]
 icon: "wingman-icon.png"
 heroImage: "wingman-screen-1.png"
 screenshots:
@@ -12,4 +12,26 @@ screenshots:
   - "wingman-screen-2.png"
 ---
 
-Wingman listens to discovery calls and turns them into actionable analytics work: events to track, dashboards to update, and QA steps with screenshots. It ties into GTM/Tealium repositories and keeps a paper trail so governance teams stay happy.
+**Wingman** is an AI-based dating application built as a direct reaction to the dominant mechanics of modern dating apps.
+
+Most dating platforms optimize for engagement, not outcomes. Infinite swiping, shallow signals, and gamified feedback loops produce activity, but not necessarily connection. Wingman starts from the opposite assumption: **less choice, more context, better intent**.
+
+The app removes swiping entirely. Instead, users go through a structured onboarding that captures personality traits, values, preferences, communication style, and expectations. This information is stored as a rich, flexible profile rather than a fixed schema, allowing the system to reason about compatibility instead of simple filters.
+
+Matching in Wingman is **curated and limited**. Users don’t browse hundreds of profiles. They receive a small number of high-quality matches computed by the system, with clear explanations of *why* a match exists. The goal is to shift the mental model from “shopping” to “considering”.
+
+A defining feature is the concept of **introductions**. Conversations don’t start by default. When two users are matched, the AI can generate a contextual introduction — a short, meaningful opener grounded in shared traits or values. This lowers the activation energy while avoiding generic icebreakers.
+
+From a technical standpoint, Wingman is designed around flexibility and iteration:
+
+* **Firebase / Firestore** stores highly structured but evolving user profiles in JSON form
+* **Cloud Functions** handle matchmaking, daily match computation, and introduction logic
+* **OpenAI models** are used for personality synthesis, compatibility reasoning, and message generation
+* The mobile app acts primarily as a client to a rules-driven backend rather than embedding logic locally
+
+One important constraint is **intentional friction**. Wingman is not designed to maximize daily usage. Limits on matches, introductions, and interactions are deliberate. Scarcity is used to increase attention, not addiction.
+
+On a personal level, Wingman is the most opinionated project I’ve built. It encodes a clear stance: technology should *reduce noise*, not amplify it. Building it forced me to formalize assumptions about relationships, communication, and how incentives shape behavior — and then translate those assumptions into product constraints.
+
+Wingman is still in development, but its direction is stable.
+It’s not trying to win the dating app market. It’s trying to build a **different category altogether**: slower, more deliberate, and aligned with how meaningful relationships actually start.

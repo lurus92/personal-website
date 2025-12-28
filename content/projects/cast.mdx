@@ -1,10 +1,10 @@
 ---
 slug: "cast"
 name: "Cast"
-status: "Exploring"
-tags: ["Audio", "AI", "Content"]
-summary: "Narrative podcast generation with analytics-grade voice quality checks."
-techStack: ["Next.js", "Vercel", "OpenAI"]
+status: "Active — MVP"
+tags: ["Finance", "Wealth", "Forecasting", "FIRE", "Personal Analytics"]
+summary: "A personal wealth forecasting tool to simulate future net worth under different scenarios, assumptions, and life choices."
+techStack: ["SwiftUI", "Firebase", "Charts", "Cloud Functions"]
 icon: "cast-icon.png"
 heroImage: "cast-screen-1.png"
 screenshots:
@@ -13,4 +13,24 @@ screenshots:
   - "cast-screen-3.png"
 ---
 
-Cast produces podcast-ready scripts and synthetic voices for niche B2B topics. It evaluates pronunciation and pacing against a reference to maintain consistency, and logs every generation for legal/brand review.
+**Cast** is a personal wealth forecasting and simulation tool built to answer a question that most finance apps avoid: *“Where will my money realistically take me?”*
+
+Most personal finance tools are backward-looking. They show what you spent, what you earned, and maybe a static net-worth snapshot. Cast is explicitly **forward-looking**. It models how wealth evolves over time based on assumptions, decisions, and uncertainty — not just historical data.
+
+The core idea is simple but powerful:
+you define your current wealth structure (cash, investments, real estate, liabilities), then simulate how it evolves month by month under configurable rules — expected returns, savings rate, expenses, inflation, major life events, and risk bands.
+
+From a product standpoint, Cast was built to feel **analytical but not academic**. I wanted something closer to a strategist’s dashboard than a consumer budgeting app. The main visual metaphor is a **wealth trajectory**: a curve over time showing min / expected / max outcomes, so you immediately see both direction and risk, not just a single deterministic number.
+
+Technically, the app was designed as a lightweight but solid MVP:
+
+* **SwiftUI** for fast iteration on clean, data-dense UI
+* **Charts** for wealth evolution, composition breakdowns, and scenario comparison
+* **Firebase** as a pragmatic backend for persistence and future extensibility (scenarios, versions, sync)
+
+One deliberate design choice was to avoid over-automation. Cast doesn’t try to “guess” your future. You explicitly control assumptions. This keeps the tool honest: if the forecast looks bad, it’s because the inputs are bad — not because of a black-box algorithm.
+
+From a personal perspective, Cast reflects how I think about money:
+not as something to optimize obsessively day-to-day, but as a **system evolving over decades**. Building it forced me to formalize trade-offs I was already reasoning about mentally — stability vs growth, location choices, lifestyle inflation, and the real cost of optionality.
+
+Cast is still an MVP, but it already does its job: it turns vague financial intuition into concrete, visual scenarios. And once you see your future wealth plotted clearly, it becomes much harder to lie to yourself.
