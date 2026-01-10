@@ -8,6 +8,14 @@ const nextConfig = {
   },
   experimental: {
     mdxRs: true
+  },
+  // Enable static export for static site generation
+  output: 'export',
+  // Configure trailing slashes for static hosting compatibility
+  trailingSlash: true,
+  // Image optimization for static export
+  images: {
+    unoptimized: true,
   }
 };
 
