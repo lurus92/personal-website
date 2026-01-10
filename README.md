@@ -76,3 +76,31 @@ Run linting once dependencies are installed:
 ```bash
 npm run lint
 ```
+
+## Going live (production deployment)
+Follow these steps to publish the site on any static hosting or Next.js-capable server.
+
+1. **Install dependencies and build the site locally:**
+   ```bash
+   npm install
+   npm run build
+   ```
+2. **Verify the production build:**
+   ```bash
+   npm run start
+   ```
+   Then open `http://localhost:3000` and verify the pages look correct.
+3. **Locate the output:**
+   - **Default (Next.js server):** the `.next/` directory plus `package.json`, `next.config.mjs`, and any runtime files are required on the server.
+   - **Static export (optional):** if you add `next export`, the static files will be written to `out/` and can be uploaded to any static host.
+4. **Upload the build to your server:**
+   - **Next.js server hosting (Vercel/Node server):** upload the repository or build artifacts and run:
+     ```bash
+     npm install
+     npm run build
+     npm run start
+     ```
+   - **Static hosting (Netlify/S3/etc.):** upload the `out/` folder contents.
+5. **Point your domain to the host:**
+   - Configure DNS records to your hosting provider.
+   - Ensure the site is served over HTTPS.
