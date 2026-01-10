@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import '../styles/globals.css';
 
-const GA_TRACKING_ID = 'G-XXXXXXXXXX';
+const GA_TRACKING_ID = 'G-Q55G0RTMMZ';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
