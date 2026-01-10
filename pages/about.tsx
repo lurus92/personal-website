@@ -19,8 +19,13 @@ const About = () => {
               </p>
             </div>
             <div className="space-y-4">
-              <div className="card h-48 bg-slate-200 flex items-center justify-center text-sm text-slate-600">
-                <span>Placeholder: timeline of Zurich, Milan, Dubai with analytics icons</span>
+              <div className="card space-y-3">
+                <p className="text-sm font-semibold text-slate-600">Locations I operate from</p>
+                <ul className="space-y-2 text-slate-700">
+                  <li>• Zurich — current base and analytics leadership hub</li>
+                  <li>• Milan — academic roots and recurring collaborations</li>
+                  <li>• Dubai — growth-market experience in retail and TikTok measurement</li>
+                </ul>
               </div>
               <div className="card space-y-2">
                 <p className="text-sm font-semibold text-slate-600">Credentials</p>
@@ -31,6 +36,78 @@ const About = () => {
                 </ul>
               </div>
             </div>
+          </div>
+        </Section>
+
+        <Section title="Professional timeline" description="A snapshot of the roles and impact that shaped my analytics leadership journey.">
+          <div className="space-y-6">
+            {[
+              {
+                role: 'Data Collection Lead',
+                timeframe: 'Nov 2024 — Present',
+                location: 'Zurich, Switzerland',
+                details: [
+                  'Lead a 5-person delivery team implementing agile GTM tracking and resolving 20+ data quality issues.',
+                  'Optimized OneTrust consent management to meet Swiss compliance while preserving UX.',
+                  'Partner with data engineering and digital sales on BigQuery integrations and real-time reporting.'
+                ]
+              },
+              {
+                role: 'Senior Measurement Partner',
+                timeframe: 'Aug 2023 — Oct 2024',
+                location: 'Dubai, UAE (TikTok)',
+                details: [
+                  'Directed 20+ Brand Lift and Brandformance studies across full-funnel measurement.',
+                  'Supported 10+ enterprise clients with creative effectiveness analysis and meta studies.',
+                  'Managed data science partners to deliver 5V creative diagnostics and sales enablement.'
+                ]
+              },
+              {
+                role: 'Senior Manager Online Analytics — Loyalty & Retail',
+                timeframe: 'Feb 2021 — Jul 2023',
+                location: 'Dubai, UAE (Alshaya Group)',
+                details: [
+                  'Launched the AURA loyalty program from 0 to 7M+ users with 50+ segmentation use cases.',
+                  'Defined 60+ analytics requirements and led implementations across external dev teams.',
+                  'Built 28+ Algonomy and Power BI dashboards and reported digital performance to C-level leaders.'
+                ]
+              },
+              {
+                role: 'Digital Analytics Manager — Senior Consultant',
+                timeframe: 'Jul 2018 — Jan 2021',
+                location: 'London, UK & Milan, Italy (Vodafone UK/Group)',
+                details: [
+                  'Scaled Tealium IQ governance and Adobe Analytics/Target implementations across 21 markets.',
+                  'Integrated Adobe and Tealium SDKs into Vodafone apps with 100+ data layer variables.',
+                  'Rolled out OneTrust consent management and 20+ Medallia NPS survey programs.'
+                ]
+              },
+              {
+                role: 'Web Analyst — JS Developer (BI Area)',
+                timeframe: 'Dec 2016 — Jul 2018',
+                location: 'Chiasso, Switzerland (lastminute.com)',
+                details: [
+                  'Implemented analytics pixels for 8 brands across 27 markets and built GTM/GA utilities.',
+                  'Created BigQuery analysis and R alerting frameworks to improve data reliability.',
+                  'Owned data governance tool evaluation and represented the core Web Analytics team.'
+                ]
+              }
+            ].map((item) => (
+              <div key={item.role} className="card space-y-3">
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+                  <div>
+                    <h3 className="text-lg font-semibold text-ink">{item.role}</h3>
+                    <p className="text-sm text-slate-500">{item.location}</p>
+                  </div>
+                  <span className="text-sm font-semibold text-slate-600">{item.timeframe}</span>
+                </div>
+                <ul className="space-y-2 text-slate-700">
+                  {item.details.map((detail) => (
+                    <li key={detail}>• {detail}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         </Section>
 

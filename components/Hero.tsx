@@ -29,9 +29,37 @@ const Hero = () => {
           engineering to get ideas into production.
         </p>
         <div className="flex flex-wrap gap-4">
-          <Link href="/contact" className="button-primary">Book a call</Link>
-          <Link href="/projects" className="button-secondary">Explore the lab</Link>
-          <Link href="/CV-LuigiRusso.pdf" className="button-secondary" download>Download CV</Link>
+          <Link
+            href="/contact"
+            className="button-primary"
+            data-analytics-event="button_click"
+            data-analytics-label="Book a call"
+            data-analytics-category="Hero"
+            data-analytics-location="Home"
+          >
+            Book a call
+          </Link>
+          <Link
+            href="/projects"
+            className="button-secondary"
+            data-analytics-event="button_click"
+            data-analytics-label="Explore the lab"
+            data-analytics-category="Hero"
+            data-analytics-location="Home"
+          >
+            Explore the lab
+          </Link>
+          <Link
+            href="/CV-LuigiRusso.pdf"
+            className="button-secondary"
+            download
+            data-analytics-event="button_click"
+            data-analytics-label="Download CV"
+            data-analytics-category="Hero"
+            data-analytics-location="Home"
+          >
+            Download CV
+          </Link>
         </div>
         <div className="grid grid-cols-2 gap-4 text-sm text-slate-600">
           <div>

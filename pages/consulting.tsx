@@ -61,8 +61,26 @@ const Consulting = () => {
             </div>
           </div>
           <div className="pt-4 flex flex-wrap gap-4">
-            <Link href="/contact" className="button-primary">Book a call</Link>
-            <Link href="/projects" className="button-secondary">See product lab</Link>
+            <Link
+              href="/contact"
+              className="button-primary"
+              data-analytics-event="button_click"
+              data-analytics-label="Book a call"
+              data-analytics-category="Consulting"
+              data-analytics-location="CTA"
+            >
+              Book a call
+            </Link>
+            <Link
+              href="/projects"
+              className="button-secondary"
+              data-analytics-event="button_click"
+              data-analytics-label="See product lab"
+              data-analytics-category="Consulting"
+              data-analytics-location="CTA"
+            >
+              See product lab
+            </Link>
           </div>
         </Section>
       </div>

@@ -39,7 +39,16 @@ const Navigation = () => {
               {item.label}
             </Link>
           ))}
-          <Link href="/contact" className="button-primary text-sm">Book a call</Link>
+          <Link
+            href="/contact"
+            className="button-primary text-sm"
+            data-analytics-event="button_click"
+            data-analytics-label="Book a call"
+            data-analytics-category="Navigation"
+            data-analytics-location="Header"
+          >
+            Book a call
+          </Link>
         </nav>
       </div>
       {open && (

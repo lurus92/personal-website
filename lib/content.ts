@@ -46,6 +46,7 @@ export function getAllPosts() {
       const { data, content } = matter(fileContents);
       return { slug, data, content };
     })
+    .filter((post) => !post.data.hidden)
     .sort((a, b) => (a.data.date > b.data.date ? -1 : 1));
 }
 

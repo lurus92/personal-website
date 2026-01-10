@@ -52,7 +52,16 @@ export default function Home({ projects, posts }: HomeProps) {
             ))}
           </div>
           <div className="pt-4">
-            <Link href="/consulting" className="button-primary">See consulting offer</Link>
+            <Link
+              href="/consulting"
+              className="button-primary"
+              data-analytics-event="button_click"
+              data-analytics-label="See consulting offer"
+              data-analytics-category="Home"
+              data-analytics-location="What I Do"
+            >
+              See consulting offer
+            </Link>
           </div>
         </Section>
 
@@ -67,7 +76,16 @@ export default function Home({ projects, posts }: HomeProps) {
             ))}
           </div>
           <div className="pt-4">
-            <Link href="/projects" className="button-secondary">View all projects</Link>
+            <Link
+              href="/projects"
+              className="button-secondary"
+              data-analytics-event="button_click"
+              data-analytics-label="View all projects"
+              data-analytics-category="Home"
+              data-analytics-location="Projects"
+            >
+              View all projects
+            </Link>
           </div>
         </Section>
 
@@ -82,7 +100,16 @@ export default function Home({ projects, posts }: HomeProps) {
             ))}
           </div>
           <div className="pt-4">
-            <Link href="/blog" className="button-secondary">Read the blog</Link>
+            <Link
+              href="/blog"
+              className="button-secondary"
+              data-analytics-event="button_click"
+              data-analytics-label="Read the blog"
+              data-analytics-category="Home"
+              data-analytics-location="Blog"
+            >
+              Read the blog
+            </Link>
           </div>
         </Section>
       </div>
