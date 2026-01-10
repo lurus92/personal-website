@@ -13,7 +13,7 @@ const Contact = () => {
           <div className="grid md:grid-cols-2 gap-8">
             <div className="card space-y-3">
               <p className="text-slate-700">Email</p>
-              <a href="mailto:hello@lrusso.it" className="text-lg font-semibold text-ink">hello@lrusso.it</a>
+              <a href="mailto:info@lrusso.it" className="text-lg font-semibold text-ink">info@lrusso.it</a>
               <p className="text-slate-600">Preferred for project briefs and collaboration ideas.</p>
             </div>
             <div className="card space-y-3">
@@ -21,14 +21,6 @@ const Contact = () => {
               <a href="#" className="text-lg font-semibold text-ink">Schedule a 30-min intro</a>
               <p className="text-slate-600">Placeholder link for Calendly booking widget.</p>
             </div>
-          </div>
-          <div className="card bg-slate-900 text-white space-y-3 mt-6">
-            <h3 className="text-lg font-semibold">What to include</h3>
-            <ul className="space-y-2 text-slate-100">
-              <li>• Your current analytics stack and pain points</li>
-              <li>• The outcomes and timelines you&apos;re targeting</li>
-              <li>• Team size and stakeholders</li>
-            </ul>
           </div>
         </Section>
       </div>

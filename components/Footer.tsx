@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="flex items-center space-x-4 text-sm">
           <Link href="/privacy" className="text-slate-600 hover:text-ink">Privacy</Link>
           <Link href="/contact" className="text-slate-600 hover:text-ink">Contact</Link>
-          <a href="mailto:hello@lrusso.it" className="text-slate-600 hover:text-ink">hello@lrusso.it</a>
+          <a href="mailto:info@lrusso.it" className="text-slate-600 hover:text-ink">info@lrusso.it</a>
         </div>
       </div>
     </footer>

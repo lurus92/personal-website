@@ -13,7 +13,7 @@ const Privacy = () => {
             This website is a personal site operated by Luigi Russo. It may use lightweight analytics (such as GA4 or a privacy-friendly alternative) to understand aggregate traffic and improve content. No invasive tracking or third-party advertising cookies are used.
           </p>
           <p>
-            If you submit contact information, it is used solely to respond to your inquiry. For data requests or removal, contact <a href="mailto:hello@lrusso.it">hello@lrusso.it</a>.
+            If you submit contact information, it is used solely to respond to your inquiry. For data requests or removal, contact <a href="mailto:info@lrusso.it">info@lrusso.it</a>.
           </p>
           <ul>
             <li>Data collected: basic visit metrics (page views, device type, referrer)</li>
