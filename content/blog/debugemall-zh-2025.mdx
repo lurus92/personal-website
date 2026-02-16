@@ -1,0 +1,83 @@
+---
+title: "Key takeaways from Debug'Em All Meetup Zurich (Jan 12) - data collection, Malloy, experimentation"
+date: "2025-12-13"
+tags: ["analytics", "datacollection", "martech", "experimentation", "abtesting", "conference"]
+place: "Zurich"
+summary: "A few takeaways from MeasureCamp Zurich 2025"
+hidden: false
+---
+
+Yesterday I attended the Debug’Em All Meetup – Zurich 2026 (Analytics Debugger x Digitec Galaxus) at Pause im Foifi. Sharing a short recap of the most interesting takeaways from the talks (useful for anyone working on tracking, data quality, analytics engineering, or experimentation).
+
+## 1) Building a robust data collection setup (Digitec Galaxus – David Hermann)
+
+The core message: **treat tracking like a production system** — with clear quality principles, ownership, and maintainability as first-class requirements.
+
+**The “7 pillars” they use to evaluate data collection quality:**
+
+* **Relevance** (only collect what is needed)
+* **Richness** (enough context/parameters to answer business questions)
+* **Coverage** (consistent tracking across surfaces and journeys)
+* **Accuracy** (correctness of event values and semantics)
+* **Data latency** (freshness / speed to availability)
+* **Ease of consumption** (analysts can use it without friction)
+* **Traceability / lineage** (know where it came from and how it changed)
+
+**Interesting (and controversial) design choice:**
+They said they use a **fully hard-coded implementation for Snowplow**, i.e. **no Tag Management System** (no GTM/Tealium) — the tradeoff is less flexibility but more control, versioning, testing, and engineering discipline.
+
+---
+
+## 2) Introduction to Malloy (Marcus Stade)
+
+Malloy was presented as an **open-source modern analytics language** that sits between raw SQL and BI tools.
+
+Why it’s interesting (especially for web/app analytics):
+
+* helps create a **semantic layer**: turning technical tables/fields into business concepts (e.g., dimensions/measures with definitions)
+* promotes **reusability** (avoid repeating SQL logic / KPI definitions everywhere)
+* reduces analysis mistakes by keeping **consistent naming + metric logic**
+* positions itself as a way to improve “data democratization”: analysts/managers can consume metrics without needing to understand physical schemas
+
+They showed examples in Google Cloud Shell / notebooks, defining GA4-style models where you standardize common concepts like sessions, pageviews, unique users, etc.
+
+---
+
+## 3) Automating A/B Tests at scale (Digitec Galaxus – Clara Goebel)
+
+They built an internal **end-to-end experimentation framework** to scale experimentation to **100+ A/B tests/year** with less manual work and more standardization.
+
+Their framework includes:
+
+1. **Implementation**
+2. **Data collection pipeline**
+3. **Monitoring dashboard**
+4. **Evaluation script**
+5. **Documentation**
+
+Main outcomes they reported:
+
+* **Speed to insights**: evaluation time reduced ~2x
+* **Higher volume of tests**
+* Stronger **statistical consistency** (less “handwavy” analysis)
+* Better presentation + documentation
+* Analysts spend time on tests that are actually worth it
+
+What they want to improve next:
+
+* move from fixed A/B tests to **adaptive experimentation** (e.g., Multi-Armed Bandits, sequential testing)
+* shift from session-based to **visitor/user-based** testing for better long-term interpretation
+* use **LLMs to generate experiment summaries**, and perform meta-analysis across experiments (patterns, learnings)
+
+---
+
+## 4) Open-source server-side automated event data validation (Defused Data – Maciek Stanasiuk)
+
+This was on **event QA / data quality assurance**, specifically:
+
+* server-side
+* fully automated
+* validating incoming events in near real-time
+* positioned as an open-source solution you can deploy quickly
+
+Core point: there are many ways to do data QA (manual testing, scenario tests, warehouse tests), but validating events as they arrive is a powerful layer for catching issues early.
