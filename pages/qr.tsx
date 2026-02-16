@@ -62,12 +62,12 @@ export default function QrLandingPage() {
       <main className="min-h-screen bg-sand px-4 py-6 text-ink">
         <div className="mx-auto flex min-h-[calc(100vh-3rem)] w-full max-w-[420px] animate-[fadeIn_200ms_ease-out] flex-col justify-center">
           <section className="text-center">
-            <div className="mb-4 inline-flex h-[72px] w-[72px] items-center justify-center overflow-hidden rounded-full border border-slate-200 shadow-[0_2px_10px_rgba(15,23,42,0.1)]">
+            <div className="mb-4 inline-flex h-[104px] w-[104px] items-center justify-center overflow-hidden rounded-full border border-slate-200 shadow-[0_2px_10px_rgba(15,23,42,0.1)]">
               <Image
                 src="/images/luigi.jpg"
                 alt="Luigi Russo"
-                width={72}
-                height={72}
+                width={104}
+                height={104}
                 priority
                 className="h-full w-full object-cover"
               />
