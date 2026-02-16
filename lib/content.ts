@@ -4,6 +4,7 @@ import matter from 'gray-matter';
 import remarkGfm from 'remark-gfm';
 import remarkRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify';
+import rehypeRaw from 'rehype-raw';
 import { remark } from 'remark';
 
 export interface ContentItem {
@@ -18,7 +19,8 @@ const PROJECTS_PATH = path.join(process.cwd(), 'content', 'projects');
 const renderMarkdown = async (content: string) => {
   const processed = await remark()
     .use(remarkGfm)
-    .use(remarkRehype)
+    .use(remarkRehype, { allowDangerousHtml: true })
+    .use(rehypeRaw)
     .use(rehypeStringify)
     .process(content);
 

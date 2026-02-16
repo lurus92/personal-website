@@ -69,6 +69,7 @@ title: "Post Title"
 date: "2025-01-10"
 tags: ["analytics", "gtm"]
 summary: "Short preview of the post."
+place: "Zurich" # optional
 ---
 
 # Markdown content here
@@ -77,6 +78,47 @@ Your article content...
 ```
 
 Then run `npm run build` to regenerate the site.
+
+### Rich blog content (sections, images, tables, code)
+
+Blog posts support standard Markdown plus inline HTML blocks, so you can use richer layouts when needed.
+
+````mdx
+---
+title: "Conference Notes"
+date: "2026-01-15"
+tags: ["analytics", "conference"]
+summary: "What I learned about activation and experimentation."
+place: "London" # optional
+---
+
+<section>
+  <h2>Key takeaway</h2>
+  <p>Activation only works when tracking quality and governance are mature.</p>
+</section>
+
+## Image example
+
+![Main stage at the conference](/images/cast-screen-1.png)
+
+## Table example
+
+| Topic | Impact |
+| --- | --- |
+| Event QA | Better data trust |
+| Server-side tracking | Better control |
+
+## Code example
+
+```js
+window.dataLayer.push({ event: 'signup_start', method: 'email' });
+```
+````
+
+Tips:
+- Use `/public/...` assets with paths like `/images/my-image.png`.
+- `place` is optional and shown on blog cards only when provided.
+- Keep frontmatter fields consistent (`title`, `date`, `tags`, `summary`).
 
 ### New Project
 

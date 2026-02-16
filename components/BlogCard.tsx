@@ -6,6 +6,7 @@ export interface BlogMeta {
   date: string;
   summary: string;
   tags: string[];
+  place?: string;
 }
 
 interface BlogCardProps {
@@ -22,8 +23,16 @@ const BlogCard = ({ post }: BlogCardProps) => {
   return (
     <Link href={`/blog/${post.slug}`} className="card block">
       <div className="space-y-3">
-        <div className="flex items-center justify-between text-sm text-slate-500">
-          <span>{date}</span>
+        <div className="space-y-2 text-sm text-slate-500">
+          <div className="flex items-center justify-between gap-3">
+            <span>{date}</span>
+            {post.place ? (
+              <span className="inline-flex items-center gap-1.5">
+                <span aria-hidden="true">📍</span>
+                <span>{post.place}</span>
+              </span>
+            ) : null}
+          </div>
           <div className="flex flex-wrap gap-2">
             {post.tags.map((tag) => (
               <span key={tag} className="tag">{tag}</span>

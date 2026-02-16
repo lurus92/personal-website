@@ -34,7 +34,8 @@ export const getStaticProps: GetStaticProps = async () => {
     title: post.data.title,
     date: post.data.date,
     summary: post.data.summary,
-    tags: post.data.tags
+    tags: post.data.tags,
+    place: post.data.place
   }));
 
   return {
