@@ -5,11 +5,20 @@ export interface ProjectMeta {
   slug: string;
   name: string;
   status: string;
+  statusColor?: string;
   tags: string[];
   summary: string;
   techStack: string[];
   icon?: string;
 }
+
+const statusColorClasses: Record<string, string> = {
+  green: 'text-green-600',
+  yellow: 'text-yellow-600',
+  red: 'text-red-600',
+  blue: 'text-blue-600',
+  gray: 'text-slate-500'
+};
 
 interface ProjectCardProps {
   project: ProjectMeta;
@@ -20,7 +29,9 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
     <Link href={`/projects/${project.slug}`} className="card block">
       <div className="flex items-start justify-between">
         <div className="space-y-2">
-          <p className="text-xs uppercase tracking-wide text-accent font-semibold">{project.status}</p>
+          <p className={`text-xs uppercase tracking-wide font-semibold ${statusColorClasses[project.statusColor || ''] || 'text-accent'}`}>
+            {project.status}
+          </p>
           <h3 className="text-xl font-semibold text-ink">{project.name}</h3>
           <p className="text-slate-600">{project.summary}</p>
           <div className="flex flex-wrap gap-2">
