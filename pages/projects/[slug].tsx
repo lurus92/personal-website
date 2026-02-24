@@ -9,6 +9,14 @@ interface ProjectPageProps {
   content: string;
 }
 
+const statusColorClasses: Record<string, string> = {
+  green: 'text-green-600',
+  yellow: 'text-yellow-600',
+  red: 'text-red-600',
+  blue: 'text-blue-600',
+  gray: 'text-slate-500'
+};
+
 const ProjectPage = ({ frontmatter, content }: ProjectPageProps) => {
   return (
     <Layout title={frontmatter.name} description={frontmatter.summary}>
@@ -27,7 +35,7 @@ const ProjectPage = ({ frontmatter, content }: ProjectPageProps) => {
               </div>
             )}
             <div className="space-y-3">
-              <p className="text-sm font-semibold text-accent uppercase tracking-wider">{frontmatter.status}</p>
+              <p className={`text-sm font-semibold uppercase tracking-wider ${statusColorClasses[frontmatter.statusColor || ''] || 'text-accent'}`}>{frontmatter.status}</p>
               <h1 className="text-4xl font-bold text-ink">{frontmatter.name}</h1>
               <p className="text-slate-600 max-w-3xl">{frontmatter.summary}</p>
               <div className="flex flex-wrap gap-2">
