@@ -22,15 +22,15 @@ const ProjectPage = ({ frontmatter, content }: ProjectPageProps) => {
     <Layout title={frontmatter.name} description={frontmatter.summary}>
       <div className="space-y-10">
         <div className="space-y-4">
-          <div className="flex items-start gap-4">
+          <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-start">
             {frontmatter.icon && (
-              <div className="w-16 h-16 rounded-xl bg-white border border-slate-200 flex items-center justify-center">
+              <div className="size-24 rounded-2xl bg-white border border-slate-200 flex items-center justify-center p-3 shadow-sm shrink-0 aspect-square sm:size-20">
                 <Image
                   src={`/images/${frontmatter.icon}`}
                   alt={`${frontmatter.name} icon`}
-                  width={64}
-                  height={64}
-                  className="object-contain"
+                  width={80}
+                  height={80}
+                  className="size-full object-contain"
                 />
               </div>
             )}

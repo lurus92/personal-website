@@ -27,7 +27,7 @@ interface ProjectCardProps {
 const ProjectCard = ({ project }: ProjectCardProps) => {
   return (
     <Link href={`/projects/${project.slug}`} className="card block">
-      <div className="flex items-start justify-between">
+      <div className="flex items-start justify-between gap-4">
         <div className="space-y-2">
           <p className={`text-xs uppercase tracking-wide font-semibold ${statusColorClasses[project.statusColor || ''] || 'text-accent'}`}>
             {project.status}
@@ -41,17 +41,17 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
           </div>
         </div>
         {project.icon ? (
-          <div className="w-16 h-16 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center">
+          <div className="size-24 shrink-0 rounded-2xl bg-slate-100 border border-slate-200 flex items-center justify-center p-3 shadow-sm aspect-square">
             <Image
               src={`/images/${project.icon}`}
               alt={`${project.name} icon`}
-              width={64}
-              height={64}
-              className="object-contain"
+              width={72}
+              height={72}
+              className="size-full object-contain"
             />
           </div>
         ) : (
-          <div className="w-16 h-16 rounded-xl bg-slate-200 flex items-center justify-center text-xs text-slate-600">
+          <div className="size-24 shrink-0 rounded-2xl bg-slate-200 flex items-center justify-center text-xs text-slate-600 aspect-square">
             <span>{project.techStack[0]}</span>
           </div>
         )}
