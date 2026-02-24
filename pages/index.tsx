@@ -122,6 +122,7 @@ export const getStaticProps: GetStaticProps = async () => {
     slug: project.slug,
     name: project.data.name,
     status: project.data.status,
+    statusColor: project.data.statusColor,
     tags: project.data.tags,
     summary: project.data.summary,
     techStack: project.data.techStack,
