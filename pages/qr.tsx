@@ -59,8 +59,8 @@ export default function QrLandingPage() {
         />
       </Head>
 
-      <main className="min-h-screen bg-sand px-4 py-6 text-ink">
-        <div className="mx-auto flex min-h-[calc(100vh-3rem)] w-full max-w-[420px] animate-[fadeIn_200ms_ease-out] flex-col justify-center">
+      <main className="min-h-screen bg-sand px-4 pb-6 pt-3 text-ink md:py-6">
+        <div className="mx-auto flex min-h-[calc(100vh-3rem)] w-full max-w-[420px] animate-[fadeIn_200ms_ease-out] flex-col justify-start md:justify-center">
           <section className="text-center">
             <div className="mb-4 inline-flex h-[104px] w-[104px] items-center justify-center overflow-hidden rounded-full border border-slate-200 shadow-[0_2px_10px_rgba(15,23,42,0.1)]">
               <Image
