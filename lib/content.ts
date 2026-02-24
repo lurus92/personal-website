@@ -72,6 +72,15 @@ export function getAllProjects() {
       const fileContents = fs.readFileSync(fullPath, 'utf-8');
       const { data, content } = matter(fileContents);
       return { slug, data, content };
+    })
+    .sort((a, b) => {
+      const aIndexValue = Number(a.data.index);
+      const bIndexValue = Number(b.data.index);
+      const aIndex = Number.isFinite(aIndexValue) ? aIndexValue : Number.MAX_SAFE_INTEGER;
+      const bIndex = Number.isFinite(bIndexValue) ? bIndexValue : Number.MAX_SAFE_INTEGER;
+
+      if (aIndex === bIndex) return a.slug.localeCompare(b.slug);
+      return aIndex - bIndex;
     });
 }
 

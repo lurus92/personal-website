@@ -127,6 +127,7 @@ Create `content/projects/my-project.mdx`:
 ```mdx
 ---
 slug: "my-project"
+index: 4
 name: "My Project Name"
 status: "Active"
 tags: ["AI", "SaaS"]
