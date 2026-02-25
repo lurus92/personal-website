@@ -5,7 +5,7 @@ import Image from 'next/image';
 const ctaItems = [
   {
     href: '/',
-    label: 'Work & Projects',
+    label: 'Marketing Technology & Analytics',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
         <path d="M6 15l6-6 6 6" strokeLinecap="round" strokeLinejoin="round" />
@@ -16,11 +16,24 @@ const ctaItems = [
   },
   {
     href: '/projects',
-    label: 'What I’m Building',
+    label: 'AI Ventures',
     icon: (
       <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
         <path d="M12 3l8 4v10l-8 4-8-4V7l8-4z" strokeLinejoin="round" />
         <path d="M8.5 9.2L12 11l3.5-1.8" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    )
+  },
+  {
+    href: 'https://www.lewisrussell.com/en?utm_source=landingpage&utm_medium=referral&utm_campaign=author_traffic&utm_content=author_button_primary',
+    label: 'Fiction and Future Worlds',
+    external: true,
+    icon: (
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8">
+        <path d="M3.5 12a8.5 8.5 0 1 0 17 0 8.5 8.5 0 1 0-17 0" />
+        <path d="M4.8 8.5c2 1 4.6 1.5 7.2 1.5 2.7 0 5.3-.5 7.2-1.5" strokeLinecap="round" />
+        <path d="M4.8 15.5c2-1 4.6-1.5 7.2-1.5 2.7 0 5.3.5 7.2 1.5" strokeLinecap="round" />
+        <path d="M12 3.5c2.2 2.2 3.3 5.2 3.3 8.5S14.2 18.3 12 20.5c-2.2-2.2-3.3-5.2-3.3-8.5S9.8 5.7 12 3.5z" strokeLinejoin="round" />
       </svg>
     )
   },
@@ -74,10 +87,10 @@ export default function QrLandingPage() {
             </div>
             <h1 className="text-[clamp(1.75rem,5.5vw,2rem)] font-semibold tracking-tight">Luigi Russo</h1>
             <p className="mt-3 text-[clamp(1.1rem,4.2vw,1.25rem)] font-medium leading-snug">
-              I build AI-powered products and systems.
+              I build intelligent products.
             </p>
             <p className="mt-3 text-[clamp(0.9rem,3.2vw,1rem)] leading-relaxed text-slate-600">
-              Analytics leader. Product builder. Global operator.
+              Enterprise Analytics. AI products. Systems thinking.
             </p>
           </section>
 
@@ -108,14 +121,32 @@ export default function QrLandingPage() {
 
               if (item.external) {
                 return (
-                  <a key={item.href} href={item.href} target="_blank" rel="noreferrer" className={classes}>
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={classes}
+                    data-analytics-event="button_click"
+                    data-analytics-label={item.label}
+                    data-analytics-category="QR"
+                    data-analytics-location="Quick Links"
+                  >
                     {content}
                   </a>
                 );
               }
 
               return (
-                <Link key={item.href} href={item.href} className={classes}>
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={classes}
+                  data-analytics-event="button_click"
+                  data-analytics-label={item.label}
+                  data-analytics-category="QR"
+                  data-analytics-location="Quick Links"
+                >
                   {content}
                 </Link>
               );
