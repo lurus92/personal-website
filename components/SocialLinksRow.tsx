@@ -65,6 +65,11 @@ export const socialLinks: SocialLink[] = [
   }
 ];
 
+
+export const headerSocialLinks = socialLinks.filter((link) =>
+  ['X', 'LinkedIn', 'GitHub'].includes(link.label)
+);
+
 export default function SocialLinksRow({ className = '' }: { className?: string }) {
   return (
     <div className={`flex flex-wrap items-center justify-center gap-2 ${className}`.trim()}>

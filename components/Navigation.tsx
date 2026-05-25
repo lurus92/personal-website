@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { socialLinks } from './SocialLinksRow';
+import { headerSocialLinks } from './SocialLinksRow';
 
 const navItems = [
   { href: '/', label: 'Home' },
@@ -24,7 +24,7 @@ const Navigation = () => {
         </Link>
         <div className="md:hidden flex items-center gap-2">
           <div className="flex items-center gap-2">
-            {socialLinks.map((link) => (
+            {headerSocialLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
@@ -67,7 +67,7 @@ const Navigation = () => {
             Book a call
           </Link>
           <div className="flex items-center gap-2">
-            {socialLinks.map((link) => (
+            {headerSocialLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
