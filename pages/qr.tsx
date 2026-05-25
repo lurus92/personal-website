@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
+import SocialLinksRow from '../components/SocialLinksRow';
 
 const ctaItems = [
   {
@@ -92,6 +93,7 @@ export default function QrLandingPage() {
             <p className="mt-3 text-[clamp(0.9rem,3.2vw,1rem)] leading-relaxed text-slate-600">
               Enterprise Analytics. AI products. Systems thinking.
             </p>
+            <SocialLinksRow className="mt-4" />
           </section>
 
           <section className="mt-10 flex flex-col gap-4">
