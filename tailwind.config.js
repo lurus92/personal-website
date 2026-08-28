@@ -13,7 +13,11 @@ module.exports = {
         accent: '#06b6d4',
         sand: '#f8fafc',
         ink: '#111827'
-      }
+      },
+      fontFamily: {
+        sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-geist-mono)', 'Menlo', 'Monaco', 'Courier New', 'monospace'],
+      },
     },
   },
   plugins: [],

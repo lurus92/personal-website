@@ -3,7 +3,21 @@ import Head from 'next/head';
 import Script from 'next/script';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { Inter, JetBrains_Mono } from 'next/font/google';
 import '../styles/globals.css';
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-geist-sans',
+  display: 'swap',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-geist-mono',
+  display: 'swap',
+  weight: ['400', '500', '700'],
+});
 
 const GA_TRACKING_ID = 'G-Q55G0RTMMZ';
 const GTM_CONTAINER_ID = 'GTM-KNSKW8S';
@@ -82,7 +96,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           style={{ display: 'none', visibility: 'hidden' }}
         />
       </noscript>
-      <Component {...pageProps} />
+      <div className={`${inter.variable} ${jetbrainsMono.variable}`}>
+        <Component {...pageProps} />
+      </div>
     </>
   );
 }

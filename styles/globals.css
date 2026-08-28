@@ -6,20 +6,13 @@
   color-scheme: light;
 }
 
-
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 body {
   @apply bg-sand text-ink font-sans antialiased;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 a {
@@ -68,25 +61,32 @@ a {
 }
 
 .tag {
-  @apply inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full bg-slate-200 text-slate-700;
+  @apply inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded-full bg-slate-100 text-slate-600;
+}
+
+.tag-dark {
+  @apply inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded-full bg-white/10 text-slate-300;
 }
 
 .section-title {
-  @apply text-3xl font-semibold text-ink mb-4;
+  @apply text-2xl md:text-3xl font-semibold tracking-tight text-ink mb-4;
 }
 
 .card {
-  @apply bg-white shadow-sm rounded-2xl border border-slate-100 p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-200;
+  @apply bg-white shadow-sm rounded-xl border border-slate-100 p-6 hover:-translate-y-0.5 hover:shadow-md transition-all duration-200;
 }
 
 .button-primary {
-  @apply inline-flex items-center justify-center px-4 py-2 rounded-lg bg-ink text-white font-semibold hover:bg-slate-900 transition-colors;
+  @apply inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-ink text-white text-sm font-semibold hover:bg-slate-800 active:scale-[0.97] transition-all duration-150;
 }
 
 .button-secondary {
-  @apply inline-flex items-center justify-center px-4 py-2 rounded-lg border border-slate-200 text-ink font-semibold hover:bg-slate-50 transition-colors;
+  @apply inline-flex items-center justify-center px-5 py-2.5 rounded-lg border border-slate-200 text-ink text-sm font-semibold hover:bg-slate-50 active:scale-[0.97] transition-all duration-150;
 }
 
+.button-secondary-dark {
+  @apply inline-flex items-center justify-center px-5 py-2.5 rounded-lg border border-white/20 text-white text-sm font-semibold hover:bg-white/10 active:scale-[0.97] transition-all duration-150;
+}
 
 .prose section {
   @apply mb-6 rounded-xl border border-slate-200 bg-slate-50/60 p-4;
