@@ -2,100 +2,152 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/*
+ * Theme tokens (RGB triplets so Tailwind opacity modifiers work).
+ * Light is the page default; navy is the brand field carried over from v1/v2
+ * (#0b1220), used for the nav, page headers and the closing band.
+ */
+:root,
+.theme-light {
+  --bg: 246 247 249;
+  --surface: 255 255 255;
+  --fg: 11 18 32;
+  --muted: 84 96 118;
+  --line: 222 227 235;
+  --accent: 12 138 94;
+  --accent-ink: 10 120 82;
+  --on-accent: 255 255 255;
   color-scheme: light;
 }
 
+.theme-navy {
+  --bg: 11 18 32;
+  --surface: 19 28 47;
+  --fg: 238 241 246;
+  --muted: 150 162 184;
+  --line: 40 52 77;
+  --accent: 70 222 160;
+  --accent-ink: 70 222 160;
+  --on-accent: 6 24 16;
+  color-scheme: dark;
+}
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  @apply bg-sand text-ink font-sans antialiased;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  @apply bg-bg text-fg font-sans antialiased;
 }
 
 a {
-  @apply text-accent hover:text-ink transition-colors;
+  @apply transition-colors;
 }
 
+:focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Single-colour logo from a transparent PNG; colour comes from `color`. */
+.logo-mask {
+  display: inline-block;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+/* Shared buttons */
+.btn {
+  @apply inline-flex items-center justify-center whitespace-nowrap rounded-lg px-5 py-3 text-sm font-semibold transition-all active:scale-[0.98];
+}
+.btn-accent {
+  @apply btn bg-accent text-on-accent hover:brightness-110;
+}
+.btn-solid {
+  @apply btn bg-fg text-bg hover:opacity-90;
+}
+.btn-ghost {
+  @apply btn border border-line text-fg hover:border-fg/50;
+}
+
+.tag {
+  @apply inline-flex items-center font-mono text-xs text-muted;
+}
+
+/* Long-form reading (blog posts, project write-ups, privacy) */
+.prose {
+  @apply text-[17px] leading-[1.75] text-fg/85;
+}
+.prose > * + * {
+  @apply mt-5;
+}
 .prose h1 {
-  @apply text-4xl font-bold mb-4;
+  @apply text-3xl font-semibold tracking-tight text-fg mt-12;
 }
-
 .prose h2 {
-  @apply text-2xl font-semibold mt-8 mb-4;
+  @apply text-2xl font-semibold tracking-tight text-fg mt-14 mb-2;
 }
-
 .prose h3 {
-  @apply text-xl font-semibold mt-6 mb-3;
+  @apply text-lg font-semibold tracking-tight text-fg mt-10 mb-1;
 }
-
-.prose p {
-  @apply mb-4 leading-relaxed;
+.prose strong {
+  @apply font-semibold text-fg;
 }
-
+.prose a {
+  @apply text-accent-ink underline decoration-accent/40 underline-offset-[3px] hover:decoration-accent;
+}
 .prose ul {
-  @apply list-disc ml-6 mb-4 space-y-2;
+  @apply list-disc pl-6 space-y-2;
 }
-
 .prose ol {
-  @apply list-decimal ml-6 mb-4 space-y-2;
+  @apply list-decimal pl-6 space-y-2;
 }
-
+.prose li::marker {
+  @apply text-muted;
+}
 .prose ul li,
 .prose ol li {
   @apply list-item;
 }
-
 .prose code {
-  @apply bg-slate-100 px-1 py-0.5 rounded text-sm font-mono;
+  @apply rounded bg-fg/[0.06] px-1.5 py-0.5 font-mono text-[0.85em] text-fg;
 }
-
 .prose pre {
-  @apply bg-slate-900 text-slate-50 p-4 rounded-lg overflow-x-auto text-sm;
+  @apply overflow-x-auto rounded-xl bg-[#0b1220] p-5 text-sm text-slate-100;
 }
-
+.prose pre code {
+  @apply bg-transparent p-0 text-inherit;
+}
 .prose blockquote {
-  @apply border-l-4 border-accent pl-4 italic text-slate-700;
+  @apply border-l-2 border-accent pl-5 text-fg;
 }
-
-.tag {
-  @apply inline-flex items-center px-3 py-1 text-xs font-semibold rounded-full bg-slate-200 text-slate-700;
+.prose hr {
+  @apply my-12 border-line;
 }
-
-.section-title {
-  @apply text-3xl font-semibold text-ink mb-4;
+.prose table {
+  @apply w-full text-left text-[15px];
 }
-
-.card {
-  @apply bg-white shadow-sm rounded-2xl border border-slate-100 p-6 hover:-translate-y-1 hover:shadow-lg transition-all duration-200;
+.prose th {
+  @apply border-b border-line py-2 pr-4 font-semibold text-fg;
 }
-
-.button-primary {
-  @apply inline-flex items-center justify-center px-4 py-2 rounded-lg bg-ink text-white font-semibold hover:bg-slate-900 transition-colors;
+.prose td {
+  @apply border-b border-line/70 py-2 pr-4 align-top;
 }
-
-.button-secondary {
-  @apply inline-flex items-center justify-center px-4 py-2 rounded-lg border border-slate-200 text-ink font-semibold hover:bg-slate-50 transition-colors;
-}
-
-
 .prose section {
-  @apply mb-6 rounded-xl border border-slate-200 bg-slate-50/60 p-4;
+  @apply rounded-xl border border-line bg-surface p-5;
 }
-
 .prose img {
-  @apply my-6 rounded-xl border border-slate-200;
+  @apply my-8 w-full rounded-xl border border-line bg-white;
 }
-
 .prose figure {
-  @apply my-6;
+  @apply my-8;
+}
+.prose figcaption {
+  @apply mt-2 text-sm text-muted;
 }

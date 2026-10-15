@@ -3,7 +3,22 @@ import Head from 'next/head';
 import Script from 'next/script';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import localFont from 'next/font/local';
 import '../styles/globals.css';
+
+const geistSans = localFont({
+  src: '../public/fonts/Geist-Variable.woff2',
+  variable: '--font-geist-sans',
+  weight: '100 900',
+  display: 'swap'
+});
+
+const geistMono = localFont({
+  src: '../public/fonts/GeistMono-Variable.woff2',
+  variable: '--font-geist-mono',
+  weight: '100 900',
+  display: 'swap'
+});
 
 const GA_TRACKING_ID = 'G-Q55G0RTMMZ';
 const GTM_CONTAINER_ID = 'GTM-KNSKW8S';
@@ -46,12 +61,10 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Luigi Russo | Analytics Leader & AI Product Builder</title>
-        <meta
-          name="description"
-          content="Luigi Russo is a Zurich-based analytics leader and AI product builder. Explore his projects, consulting services, and writings on analytics and AI."
-        />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <meta name="theme-color" content="#0b1220" />
       </Head>
       <Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`} />
       <Script id="gtag-init" strategy="afterInteractive">
@@ -82,7 +95,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           style={{ display: 'none', visibility: 'hidden' }}
         />
       </noscript>
-      <Component {...pageProps} />
+      <div className={`${geistSans.variable} ${geistMono.variable} font-sans`}>
+        <Component {...pageProps} />
+      </div>
     </>
   );
 }

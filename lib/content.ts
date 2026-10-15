@@ -93,3 +93,29 @@ export async function getProjectBySlug(slug: string) {
 
   return { slug: realSlug, frontmatter: data, content: contentHtml };
 }
+
+// Serializable card data for listings (getStaticProps can't pass undefined).
+export function getPostMetas() {
+  return getAllPosts().map((post) => ({
+    slug: post.slug,
+    title: post.data.title,
+    date: post.data.date,
+    summary: post.data.summary ?? '',
+    tags: post.data.tags ?? [],
+    place: post.data.place ?? null,
+    cover: post.data.cover ?? null,
+    coverAlt: post.data.coverAlt ?? null
+  }));
+}
+
+export function getProjectMetas() {
+  return getAllProjects().map((project) => ({
+    slug: project.slug,
+    name: project.data.name,
+    status: project.data.status,
+    summary: project.data.summary,
+    tags: project.data.tags ?? [],
+    icon: project.data.icon ?? null,
+    image: project.data.heroImage ?? null
+  }));
+}

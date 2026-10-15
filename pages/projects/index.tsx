@@ -1,50 +1,38 @@
 import { GetStaticProps } from 'next';
+import CloseCta from '../../components/CloseCta';
 import Layout from '../../components/Layout';
+import PageHeader from '../../components/PageHeader';
 import ProjectCard, { ProjectMeta } from '../../components/ProjectCard';
-import Section from '../../components/Section';
-import { getAllProjects } from '../../lib/content';
+import Reveal from '../../components/Reveal';
+import { getProjectMetas } from '../../lib/content';
 
-interface ProjectsProps {
-  projects: ProjectMeta[];
-}
-
-const ProjectsPage = ({ projects }: ProjectsProps) => {
-  return (
-    <Layout title="Projects" description="Explore Russo Technologies lab projects built by Luigi Russo.">
-      <div className="space-y-12">
-        <Section
-          eyebrow="Russo Technologies"
-          title="My product lab"
-          description="AI-first products I&apos;m building hands-on, merging analytics rigor with user-centric design."
-        >
-          <div className="grid md:grid-cols-2 gap-6">
-            {projects.map((project) => (
-              <ProjectCard key={project.slug} project={project} />
-            ))}
-          </div>
-        </Section>
-      </div>
-    </Layout>
-  );
-};
-
-export const getStaticProps: GetStaticProps = async () => {
-  const projects = getAllProjects().map((project) => ({
-    slug: project.slug,
-    name: project.data.name,
-    status: project.data.status,
-    statusColor: project.data.statusColor,
-    tags: project.data.tags,
-    summary: project.data.summary,
-    techStack: project.data.techStack,
-    icon: project.data.icon
-  }));
-
-  return {
-    props: {
-      projects
+const ProjectsPage = ({ projects }: { projects: ProjectMeta[] }) => (
+  <Layout
+    title="Projects"
+    path="/projects"
+    description="Russo Technologies: AI products built by Luigi Russo, including AskVio."
+    bleed
+    header={
+      <PageHeader
+        kicker="Russo Technologies"
+        title="What I'm building"
+        intro="My product lab: AI products built with the measurement discipline of a decade in analytics. AskVio is the one I'm taking to market."
+      />
     }
-  };
-};
+  >
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-20">
+      <div className="grid gap-6 md:grid-cols-2">
+        {projects.map((project, i) => (
+          <Reveal key={project.slug} delay={0.05 * (i % 2)}>
+            <ProjectCard project={project} />
+          </Reveal>
+        ))}
+      </div>
+    </div>
+    <CloseCta location="Projects" title="Want to build something together?" />
+  </Layout>
+);
+
+export const getStaticProps: GetStaticProps = async () => ({ props: { projects: getProjectMetas() } });
 
 export default ProjectsPage;

@@ -1,99 +1,97 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion, useReducedMotion } from 'motion/react';
 import luigiPortrait from '../public/images/luigi.jpg';
 
+// The three lines that have survived every version of the site since v1.
+// Each one is a hat, and each links to its proof.
+const lines = [
+  { text: "Analyse people's needs.", proof: 'Career', href: '/about', external: false },
+  { text: 'Spot business opportunities.', proof: 'Lab', href: '/projects', external: false },
+  { text: 'Engineer complex software.', proof: 'GitHub', href: 'https://github.com/lurus92', external: true }
+];
+
+const spring = { type: 'spring' as const, stiffness: 120, damping: 22 };
+
 const Hero = () => {
+  const reduce = useReducedMotion();
+  const enter = (delay: number) => ({
+    initial: reduce ? false : { opacity: 0, y: 16 },
+    animate: { opacity: 1, y: 0 },
+    transition: { ...spring, delay }
+  });
+
   return (
-    <section className="grid md:grid-cols-2 gap-10 items-center">
-      <div className="space-y-6">
-        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-slate-200 text-sm font-semibold text-slate-800">
-          <span>Analytics leader</span>
-          <span className="text-slate-500">&</span>
-          <span>AI product builder</span>
-        </div>
-        <div className="space-y-3">
-          <h1 className="text-4xl md:text-5xl font-bold text-ink leading-tight">
-            Hi, I&apos;m Luigi Russo.
-          </h1>
-          <p className="text-xl md:text-2xl font-semibold uppercase leading-snug tracking-tight text-ink">
-            I love to analyse people needs.
-            <br />
-            Spot business opportunities.
-            <br />
-            Engineer complex software.
-          </p>
-        </div>
-        <p className="text-lg text-slate-700 leading-relaxed">
-          I turn messy tracking into trustworthy analytics and ship AI-first products that teams actually use. Zurich-based
-          with roots in Milan and Dubai, I blend GTM, GA4, Adobe Analytics, Tealium, and experimentation with hands-on
-          engineering to get ideas into production.
-        </p>
-        <div className="flex flex-wrap gap-4">
-          <Link
-            href="/contact"
-            className="button-primary"
-            data-analytics-event="button_click"
-            data-analytics-label="Book a call"
-            data-analytics-category="Hero"
-            data-analytics-location="Home"
+    <section className="theme-navy bg-bg text-fg">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16 md:pt-16 md:pb-20 grid gap-12 lg:grid-cols-12 lg:items-end">
+        <div className="lg:col-span-7">
+          <motion.h1
+            {...enter(0)}
+            className="text-[2.5rem] sm:text-5xl lg:text-[4.1rem] font-semibold tracking-[-0.035em] leading-[1.03] [text-wrap:balance]"
           >
-            Book a call
-          </Link>
-          <Link
-            href="/projects"
-            className="button-secondary"
-            data-analytics-event="button_click"
-            data-analytics-label="Explore the lab"
-            data-analytics-category="Hero"
-            data-analytics-location="Home"
-          >
-            Explore the lab
-          </Link>
-          <Link
-            href="/CV-LuigiRusso.pdf"
-            className="button-secondary"
-            download
-            data-analytics-event="button_click"
-            data-analytics-label="Download CV"
-            data-analytics-category="Hero"
-            data-analytics-location="Home"
-          >
-            Download CV
-          </Link>
-        </div>
-        <div className="grid grid-cols-2 gap-4 text-sm text-slate-600">
-          <div>
-            <p className="font-semibold text-ink">Key tools</p>
-            <p>GTM · GA4 · Tealium · Adobe Analytics · Adobe Target · Power BI · OpenAI</p>
-          </div>
-          <div>
-            <p className="font-semibold text-ink">Focus areas</p>
-            <p>Tracking quality · CDP · CRO · Experimentation · AI for marketing</p>
-          </div>
-        </div>
-      </div>
-      <div className="card space-y-4 bg-gradient-to-br from-slate-50 to-white">
-        <div className="relative aspect-square rounded-xl overflow-hidden border border-slate-200">
-          <Image
-            src={luigiPortrait}
-            alt="Luigi Russo"
-            fill
-            className="object-cover"
-            sizes="(min-width: 768px) 420px, 100vw"
-            priority
-          />
-        </div>
-        <div className="space-y-3">
-          <p className="text-slate-700 leading-relaxed">
-            “I help teams trust their data, measure what matters, and build AI products that ship. From tracking foundations to
-            full-stack product experiments, I bridge strategy with hands-on delivery.”
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {['Analytics strategy', 'Implementation', 'Experimentation', 'AI apps'].map((tag) => (
-              <span key={tag} className="tag">{tag}</span>
+            Founder building AI products <span className="text-muted">on ten years of analytics.</span>
+          </motion.h1>
+
+          <motion.ul {...enter(0.08)} className="mt-10 border-t border-line">
+            {lines.map((l) => (
+              <li key={l.text} className="border-b border-line">
+                <a
+                  href={l.href}
+                  {...(l.external ? { target: '_blank', rel: 'noreferrer' } : {})}
+                  className="group flex items-baseline justify-between gap-6 py-4"
+                >
+                  <span className="text-xl sm:text-2xl font-medium tracking-tight group-hover:text-accent transition-colors">
+                    {l.text}
+                  </span>
+                  <span className="font-mono text-xs sm:text-sm text-muted group-hover:text-accent transition-colors shrink-0">
+                    {l.proof} <span aria-hidden="true" className="inline-block transition-transform group-hover:translate-x-0.5">→</span>
+                  </span>
+                </a>
+              </li>
             ))}
-          </div>
+          </motion.ul>
+
+          <motion.div {...enter(0.16)} className="mt-10 flex flex-wrap gap-3">
+            <Link
+              href="/projects"
+              className="inline-flex items-center rounded-lg bg-accent px-5 py-3 text-sm font-semibold text-on-accent hover:brightness-110 active:scale-[0.98] transition-all"
+              data-analytics-event="button_click"
+              data-analytics-label="See what I'm building"
+              data-analytics-category="Hero"
+              data-analytics-location="Home"
+            >
+              See what I&apos;m building
+            </Link>
+            <a
+              href="/CV-LuigiRusso.pdf"
+              className="inline-flex items-center rounded-lg border border-line px-5 py-3 text-sm font-semibold text-fg hover:border-fg/50 active:scale-[0.98] transition-all"
+              data-analytics-event="button_click"
+              data-analytics-label="Download CV"
+              data-analytics-category="Hero"
+              data-analytics-location="Home"
+            >
+              Download CV
+            </a>
+          </motion.div>
         </div>
+
+        <motion.div
+          className="lg:col-span-5"
+          initial={reduce ? false : { opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ type: 'spring', stiffness: 80, damping: 20, delay: 0.2 }}
+        >
+          <div className="relative aspect-[4/5] w-full max-w-[300px] sm:max-w-[360px] lg:max-w-none lg:max-h-[560px] overflow-hidden rounded-2xl">
+            <Image
+              src={luigiPortrait}
+              alt="Portrait of Luigi Russo"
+              fill
+              priority
+              className="object-cover object-[50%_20%]"
+              sizes="(min-width: 1024px) 440px, 100vw"
+            />
+          </div>
+        </motion.div>
       </div>
     </section>
   );

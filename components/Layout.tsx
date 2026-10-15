@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Link from 'next/link';
 import { ReactNode } from 'react';
 
 import Footer from './Footer';
@@ -9,27 +8,54 @@ interface LayoutProps {
   children: ReactNode;
   title?: string;
   description?: string;
+  /** Navy band rendered right under the nav (PageHeader or Hero). */
+  header?: ReactNode;
+  /** Full-bleed pages manage their own containers. */
+  bleed?: boolean;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  path?: string;
 }
 
-const Layout = ({ children, title, description }: LayoutProps) => {
-  const pageTitle = title ? `${title} | Luigi Russo` : 'Luigi Russo | Analytics Leader & AI Product Builder';
+const SITE = 'https://lrusso.it';
+
+const Layout = ({ children, title, description, header, bleed, ogImage, ogType = 'website', path = '' }: LayoutProps) => {
+  const pageTitle = title ? `${title} | Luigi Russo` : 'Luigi Russo | Founder & Analytics Leader';
   const pageDescription =
     description ||
-    'Zurich-based analytics leader and AI product builder with experience across GTM, GA4, Adobe Analytics, and AI-driven products.';
+    'Luigi Russo builds AI products on ten years of analytics leadership at TikTok, Vodafone and Alshaya. Writing on analytics, AI and building.';
+  const image = ogImage ? `${SITE}${ogImage}` : `${SITE}/images/luigi.jpg`;
 
   return (
-    <div className="min-h-screen flex flex-col bg-sand text-ink">
+    <div className="theme-light min-h-[100dvh] flex flex-col bg-bg text-fg">
       <Head>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
+        <link rel="canonical" href={`${SITE}${path}`} />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDescription} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://lrusso.it" />
-        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="og:type" content={ogType} />
+        <meta property="og:url" content={`${SITE}${path}`} />
+        <meta property="og:image" content={image} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={pageDescription} />
+        <meta name="twitter:image" content={image} />
       </Head>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-surface focus:px-3 focus:py-2"
+      >
+        Skip to content
+      </a>
       <Navigation />
-      <main className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">{children}</main>
+      {header}
+      <main
+        id="main"
+        className={bleed ? 'flex-1 w-full' : 'flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-20'}
+      >
+        {children}
+      </main>
       <Footer />
     </div>
   );
