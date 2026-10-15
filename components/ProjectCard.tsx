@@ -9,19 +9,24 @@ export interface ProjectMeta {
   summary: string;
   icon?: string | null;
   image?: string | null;
+  imageAlt?: string | null;
+  url?: string | null;
+  urlLabel?: string | null;
 }
 
 // Screenshot when there is one; otherwise the icon on an accent-tinted field.
 const ProjectCard = ({ project }: { project: ProjectMeta }) => (
   <Link
     href={`/projects/${project.slug}`}
+    data-analytics-event="select_content" data-analytics-category="Project" data-analytics-label={project.name}
+    data-analytics-location="Projects"
     className="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface transition-colors hover:border-fg/30"
   >
     <div className="relative aspect-[16/10] overflow-hidden border-b border-line bg-[#0b1220]">
       {project.image ? (
         <Image
           src={`/images/${project.image}`}
-          alt={`${project.name} screenshot`}
+          alt={project.imageAlt ?? `${project.name} screenshot`}
           fill
           className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
           sizes="(min-width: 768px) 560px, 100vw"

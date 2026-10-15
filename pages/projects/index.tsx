@@ -16,7 +16,7 @@ const ProjectsPage = ({ projects }: { projects: ProjectMeta[] }) => (
       <PageHeader
         kicker="Russo Technologies"
         title="What I'm building"
-        intro="My product lab: AI products built with the measurement discipline of a decade in analytics. AskVio is the one I'm taking to market."
+        intro="My product lab: AI products built with the measurement discipline of a decade in analytics. AskVio is live in production."
       />
     }
   >

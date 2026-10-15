@@ -4,6 +4,7 @@ import Script from 'next/script';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import localFont from 'next/font/local';
+import { GA_ID, handleCalendlyMessage, handleDocumentClick, trackPageView } from '../lib/analytics';
 import '../styles/globals.css';
 
 const geistSans = localFont({
@@ -20,40 +21,22 @@ const geistMono = localFont({
   display: 'swap'
 });
 
-const GA_TRACKING_ID = 'G-Q55G0RTMMZ';
 const GTM_CONTAINER_ID = 'GTM-KNSKW8S';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   useEffect(() => {
-    const handleRouteChange = (url: string) => {
-      if (typeof window !== 'undefined' && 'gtag' in window) {
-        window.gtag('config', GA_TRACKING_ID, { page_path: url });
-      }
-    };
-
-    const handleClick = (event: MouseEvent) => {
-      const target = event.target as HTMLElement | null;
-      const element = target?.closest('[data-analytics-event]') as HTMLElement | null;
-      if (!element || typeof window === 'undefined' || !('gtag' in window)) {
-        return;
-      }
-
-      const { analyticsEvent, analyticsLabel, analyticsCategory, analyticsLocation } = element.dataset;
-      window.gtag('event', analyticsEvent ?? 'button_click', {
-        event_category: analyticsCategory ?? 'CTA',
-        event_label: analyticsLabel ?? element.textContent ?? 'Unknown',
-        value: analyticsLocation ?? ''
-      });
-    };
-
-    router.events.on('routeChangeComplete', handleRouteChange);
-    document.addEventListener('click', handleClick);
+    // The first page_view is sent by the gtag init script below; this covers
+    // every client-side navigation after it.
+    router.events.on('routeChangeComplete', trackPageView);
+    document.addEventListener('click', handleDocumentClick);
+    window.addEventListener('message', handleCalendlyMessage);
 
     return () => {
-      router.events.off('routeChangeComplete', handleRouteChange);
-      document.removeEventListener('click', handleClick);
+      router.events.off('routeChangeComplete', trackPageView);
+      document.removeEventListener('click', handleDocumentClick);
+      window.removeEventListener('message', handleCalendlyMessage);
     };
   }, [router.events]);
 
@@ -66,15 +49,18 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="theme-color" content="#0b1220" />
       </Head>
-      <Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`} />
+      <Script strategy="afterInteractive" src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
       <Script id="gtag-init" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           window.gtag = gtag;
           gtag('js', new Date());
-          gtag('config', '${GA_TRACKING_ID}', {
-            page_path: window.location.pathname
+          gtag('config', '${GA_ID}', { send_page_view: false });
+          gtag('event', 'page_view', {
+            page_location: window.location.href,
+            page_path: window.location.pathname,
+            page_title: document.title
           });
         `}
       </Script>

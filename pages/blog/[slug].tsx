@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { BlogMeta, formatDate } from '../../components/BlogCard';
 import Layout from '../../components/Layout';
 import PageHeader from '../../components/PageHeader';
+import ReadProgress from '../../components/ReadProgress';
 import { getAllPosts, getPostBySlug, getPostMetas } from '../../lib/content';
 
 interface BlogPostProps {
@@ -58,7 +59,10 @@ const BlogPost = ({ slug, frontmatter, content, more }: BlogPostProps) => {
       </Head>
 
       <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-20">
-        <div className="prose" dangerouslySetInnerHTML={{ __html: content }} />
+        <div className="relative">
+          <div className="prose" dangerouslySetInnerHTML={{ __html: content }} />
+          <ReadProgress key={slug} slug={slug} />
+        </div>
       </article>
 
       {more.length > 0 && (
@@ -71,7 +75,7 @@ const BlogPost = ({ slug, frontmatter, content, more }: BlogPostProps) => {
             <ul className="mt-6 divide-y divide-line border-y border-line">
               {more.map((p) => (
                 <li key={p.slug}>
-                  <Link href={`/blog/${p.slug}`} className="group block py-5">
+                  <Link href={`/blog/${p.slug}`} className="group block py-5" data-analytics-event="select_content" data-analytics-category="Blog post" data-analytics-label={p.title} data-analytics-location="Keep reading">
                     <p className="font-mono text-xs text-muted">
                       {formatDate(p.date)}
                       {p.place ? `, ${p.place}` : ''}

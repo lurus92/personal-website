@@ -116,6 +116,9 @@ export function getProjectMetas() {
     summary: project.data.summary,
     tags: project.data.tags ?? [],
     icon: project.data.icon ?? null,
-    image: project.data.heroImage ?? null
+    image: project.data.heroImage ?? null,
+    imageAlt: project.data.heroImageAlt ?? null,
+    url: project.data.url ?? null,
+    urlLabel: project.data.urlLabel ?? null
   }));
 }

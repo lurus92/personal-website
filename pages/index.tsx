@@ -6,6 +6,7 @@ import { BlogMeta, formatDate } from '../components/BlogCard';
 import CloseCta from '../components/CloseCta';
 import Hero from '../components/Hero';
 import Layout from '../components/Layout';
+import Logo, { LogoId } from '../components/Logo';
 import { ProjectMeta } from '../components/ProjectCard';
 import Reveal from '../components/Reveal';
 import { getPostMetas, getProjectMetas } from '../lib/content';
@@ -33,18 +34,10 @@ const personJsonLd = {
   address: { '@type': 'PostalAddress', addressLocality: 'Zurich', addressCountry: 'CH' }
 };
 
-// Single-colour masks (public/images/logos), traced from the official artwork.
-// h = rendered height in px, ratio = width / height of the PNG.
-const employers = [
-  { name: 'TikTok', file: 'tiktok', h: 44, ratio: 114 / 160 },
-  { name: 'Vodafone', file: 'vodafone', h: 44, ratio: 183 / 160 },
-  { name: 'Alshaya Group', file: 'alshaya', h: 46, ratio: 187 / 160 },
-  { name: 'lastminute.com', file: 'lastminute', h: 30, ratio: 209 / 160 }
-];
-
-const stages = [
-  { name: 'MeasureCamp (Los Angeles, London)', file: 'measurecamp', h: 26, ratio: 1268 / 160 },
-  { name: 'Analytics Pioneers Summit', file: 'analytics-pioneers', h: 40, ratio: 402 / 160 }
+const employers: LogoId[] = ['sunrise', 'tiktok', 'vodafone', 'alshaya', 'lastminute'];
+const stages: { id: LogoId; label: string }[] = [
+  { id: 'measurecamp', label: 'MeasureCamp (Los Angeles, London)' },
+  { id: 'analytics-pioneers', label: 'Analytics Pioneers Summit' }
 ];
 
 const stats = [
@@ -61,21 +54,6 @@ const Arrow = () => (
   <span aria-hidden="true" className="inline-block transition-transform group-hover:translate-x-0.5">→</span>
 );
 
-const Logo = ({ name, file, h, ratio }: { name: string; file: string; h: number; ratio: number }) => (
-  <span
-    role="img"
-    aria-label={name}
-    title={name}
-    className="logo-mask shrink-0"
-    style={{
-      height: `${h}px`,
-      width: `${Math.round(h * ratio)}px`,
-      WebkitMaskImage: `url(/images/logos/${file}.png)`,
-      maskImage: `url(/images/logos/${file}.png)`
-    }}
-  />
-);
-
 export default function Home({ projects, posts }: HomeProps) {
   const [featured, ...rest] = posts;
   const [lead, ...others] = projects;
@@ -87,28 +65,28 @@ export default function Home({ projects, posts }: HomeProps) {
       </Head>
 
       {/* Proof: who I did the analytics for, and where I speak */}
-      <section className="border-b border-line bg-surface">
+      <section data-analytics-section="Proof" className="border-b border-line bg-surface">
         <div className={`${container} py-8 flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between`}>
           <div className="flex flex-wrap items-center gap-x-10 gap-y-5 text-fg/70">
             <span className="w-full sm:w-auto font-mono text-xs text-muted">Previously at</span>
-            {employers.map((l) => (
-              <Logo key={l.file} {...l} />
+            {employers.map((id) => (
+              <Logo key={id} id={id} />
             ))}
           </div>
           <div className="flex flex-wrap items-center gap-x-10 gap-y-5 text-fg/70">
             <span className="w-full sm:w-auto font-mono text-xs text-muted">Speaking at</span>
             {stages.map((l) => (
-              <Logo key={l.file} {...l} />
+              <Logo key={l.id} id={l.id} label={l.label} />
             ))}
           </div>
         </div>
       </section>
 
       {/* Writing: the newest part of the site, first section after the proof */}
-      <section className={`${container} py-20 md:py-28`}>
+      <section data-analytics-section="Writing" className={`${container} py-20 md:py-28`}>
         <Reveal className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <h2 className={h2}>Writing</h2>
-          <Link href="/blog" className={arrowLink}>All posts <Arrow /></Link>
+          <Link href="/blog" className={arrowLink} data-analytics-event="button_click" data-analytics-label="All posts" data-analytics-category="Home">All posts <Arrow /></Link>
         </Reveal>
         <p className="mt-4 max-w-[60ch] text-lg text-muted">
           Essays on analytics and AI, and notes from the conferences I go to.
@@ -117,7 +95,7 @@ export default function Home({ projects, posts }: HomeProps) {
         <div className="mt-12 grid gap-10 lg:grid-cols-12 lg:gap-14">
           {featured && (
             <Reveal className="lg:col-span-7">
-              <Link href={`/blog/${featured.slug}`} className="group block">
+              <Link href={`/blog/${featured.slug}`} className="group block" data-analytics-event="select_content" data-analytics-label={featured.title} data-analytics-category="Blog post">
                 {featured.cover && (
                   <div className="relative aspect-[16/9] overflow-hidden rounded-2xl border border-line bg-white">
                     <Image
@@ -142,7 +120,7 @@ export default function Home({ projects, posts }: HomeProps) {
             <ul className="divide-y divide-line border-y border-line">
               {rest.slice(0, 4).map((p) => (
                 <li key={p.slug}>
-                  <Link href={`/blog/${p.slug}`} className="group block py-5">
+                  <Link href={`/blog/${p.slug}`} className="group block py-5" data-analytics-event="select_content" data-analytics-label={p.title} data-analytics-category="Blog post">
                     <p className="font-mono text-xs text-muted">
                       {formatDate(p.date)}
                       {p.place ? `, ${p.place}` : ''}
@@ -159,11 +137,11 @@ export default function Home({ projects, posts }: HomeProps) {
       </section>
 
       {/* Lab: AskVio leads, the rest support */}
-      <section className="border-y border-line bg-surface/60">
+      <section data-analytics-section="Lab" className="border-y border-line bg-surface/60">
         <div className={`${container} py-20 md:py-28`}>
           <Reveal className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <h2 className={h2}>What I&apos;m building</h2>
-            <Link href="/projects" className={arrowLink}>All projects <Arrow /></Link>
+            <Link href="/projects" className={arrowLink} data-analytics-event="button_click" data-analytics-label="All projects" data-analytics-category="Home">All projects <Arrow /></Link>
           </Reveal>
           <p className="mt-4 max-w-[60ch] text-lg text-muted">
             Russo Technologies is my product lab: AI products built with the measurement discipline of a decade in analytics.
@@ -171,12 +149,9 @@ export default function Home({ projects, posts }: HomeProps) {
 
           <div className="mt-12 grid gap-4 lg:grid-cols-2">
             {lead && (
-              <Reveal>
-                <Link
-                  href={`/projects/${lead.slug}`}
-                  className="group flex h-full flex-col justify-between gap-10 rounded-2xl border border-accent/30 bg-accent/[0.08] p-8 sm:p-10 transition-colors hover:border-accent/60"
-                >
-                  <div>
+              <Reveal className="h-full">
+                <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-accent/30 bg-accent/[0.08] transition-colors hover:border-accent/60">
+                  <div className="p-8 sm:p-10">
                     <div className="flex items-center gap-4">
                       {lead.icon && (
                         <span className="relative size-14 overflow-hidden rounded-xl bg-white">
@@ -185,29 +160,64 @@ export default function Home({ projects, posts }: HomeProps) {
                       )}
                       <span className="font-mono text-xs text-accent-ink">{lead.status}</span>
                     </div>
-                    <h3 className="mt-8 text-4xl sm:text-5xl font-semibold tracking-[-0.03em]">{lead.name}</h3>
-                    <p className="mt-4 max-w-[46ch] text-lg text-muted">{lead.summary}</p>
+                    <h3 className="mt-8 text-4xl sm:text-5xl font-semibold tracking-[-0.03em]">
+                      {/* stretched link: the whole tile opens the project page */}
+                      <Link href={`/projects/${lead.slug}`} className="after:absolute after:inset-0" data-analytics-event="select_content" data-analytics-label={lead.name} data-analytics-category="Project">
+                        {lead.name}
+                      </Link>
+                    </h3>
+                    <p className="mt-4 max-w-[48ch] text-lg text-muted">{lead.summary}</p>
+                    <div className="relative z-10 mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
+                      <span className={arrowLink}>Explore {lead.name} <Arrow /></span>
+                      {lead.url && (
+                        <a
+                          href={lead.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-sm font-semibold text-muted hover:text-fg"
+                          data-analytics-event="outbound_project"
+                          data-analytics-label={lead.name}
+                          data-analytics-category="Project"
+                          data-analytics-location="Home lab"
+                        >
+                          {lead.urlLabel ?? lead.url} <span aria-hidden="true">↗</span>
+                        </a>
+                      )}
+                    </div>
                   </div>
-                  <span className={arrowLink}>Explore {lead.name} <Arrow /></span>
-                </Link>
+                  {lead.image && (
+                    <div className="relative mt-auto ml-8 sm:ml-10 aspect-[16/10] overflow-hidden rounded-tl-xl border-l border-t border-accent/30">
+                      <Image
+                        src={`/images/${lead.image}`}
+                        alt={lead.imageAlt ?? `${lead.name} screenshot`}
+                        fill
+                        className="object-cover object-[0%_60%] transition-transform duration-500 group-hover:scale-[1.02]"
+                        sizes="(min-width: 1024px) 520px, 100vw"
+                      />
+                    </div>
+                  )}
+                </div>
               </Reveal>
             )}
 
-            <div className="grid gap-4">
+            <div className="grid gap-4 lg:auto-rows-fr">
               {others.map((p, i) => (
-                <Reveal key={p.slug} delay={0.06 * (i + 1)}>
+                <Reveal key={p.slug} delay={0.06 * (i + 1)} className="h-full">
                   <Link
                     href={`/projects/${p.slug}`}
-                    className="group grid grid-cols-[1fr_104px] sm:grid-cols-[1fr_140px] items-center gap-5 overflow-hidden rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-fg/30"
+                    data-analytics-event="select_content"
+                    data-analytics-label={p.name}
+                    data-analytics-category="Project"
+                    className="group grid h-full grid-cols-[1fr_104px] sm:grid-cols-[1fr_140px] lg:grid-cols-[1fr_180px] items-center lg:items-stretch gap-5 overflow-hidden rounded-2xl border border-line bg-surface p-5 transition-colors hover:border-fg/30"
                   >
-                    <div className="min-w-0">
+                    <div className="min-w-0 self-center">
                       <p className="font-mono text-xs text-muted">{p.status}</p>
                       <h3 className="mt-1 text-xl font-semibold tracking-tight group-hover:text-accent-ink transition-colors">{p.name}</h3>
                       <p className="mt-1.5 text-sm text-muted line-clamp-2">{p.summary}</p>
                     </div>
                     {p.image && (
-                      <div className="relative h-24 sm:h-28 overflow-hidden rounded-lg border border-line bg-[#0b1220]">
-                        <Image src={`/images/${p.image}`} alt={`${p.name} screenshot`} fill className="object-cover object-top" sizes="140px" />
+                      <div className="relative h-24 sm:h-28 lg:h-auto lg:min-h-[7rem] overflow-hidden rounded-lg border border-line bg-[#0b1220]">
+                        <Image src={`/images/${p.image}`} alt={`${p.name} screenshot`} fill className="object-cover object-top" sizes="180px" />
                       </div>
                     )}
                   </Link>
@@ -219,7 +229,7 @@ export default function Home({ projects, posts }: HomeProps) {
       </section>
 
       {/* Analytics: outcomes, not a skills table */}
-      <section className={`${container} py-20 md:py-28`}>
+      <section data-analytics-section="Analytics" className={`${container} py-20 md:py-28`}>
         <Reveal>
           <h2 className={`${h2} max-w-[18ch]`}>Ten years inside analytics teams</h2>
           <p className="mt-4 max-w-[60ch] text-lg text-muted">
@@ -235,13 +245,13 @@ export default function Home({ projects, posts }: HomeProps) {
           ))}
         </div>
         <div className="mt-12 flex flex-wrap gap-x-8 gap-y-3">
-          <Link href="/about" className={arrowLink}>Full career <Arrow /></Link>
-          <Link href="/consulting" className={arrowLink}>Consulting <Arrow /></Link>
+          <Link href="/about" className={arrowLink} data-analytics-event="button_click" data-analytics-label="Full career" data-analytics-category="Home">Full career <Arrow /></Link>
+          <Link href="/consulting" className={arrowLink} data-analytics-event="button_click" data-analytics-label="Consulting" data-analytics-category="Home">Consulting <Arrow /></Link>
         </div>
       </section>
 
       {/* Fiction: Lewis Russell */}
-      <section className="border-t border-line bg-surface">
+      <section data-analytics-section="Fiction" className="border-t border-line bg-surface">
         <div className={`${container} py-20 md:py-28 grid gap-12 md:grid-cols-12 md:items-center`}>
           <Reveal className="md:col-span-4 lg:col-span-3">
             <a href="https://www.lewisrussell.com" target="_blank" rel="noreferrer" className="block">

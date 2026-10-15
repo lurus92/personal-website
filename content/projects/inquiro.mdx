@@ -3,34 +3,51 @@ slug: "askvio"
 index: 0
 name: "AskVio"
 statusColor: "green"
-status: "MVP Ready"
-tags: ["AI", "Search", "Knowledge Base", "B2B", "RAG"]
-summary: "An embeddable AI-powered search assistant that lets users query websites and documents conversationally, with accurate, source-grounded answers."
-techStack: ["JavaScript", "Firebase", "Cloud Functions", "Vector DB", "OpenAI"]
+status: "In production"
+url: "https://askvio.app"
+urlLabel: "askvio.app"
+tags: ["AI", "Analytics", "GA4", "E-commerce", "WebMCP"]
+summary: "The intent layer for your website. It answers every visitor question from your own content, captures what they couldn't find, and ranks the fix in a weekly brief, with proof in your own GA4."
+techStack: ["JavaScript widget", "Firebase", "Cloud Functions", "RAG + vector search", "OpenAI", "GA4", "WebMCP"]
 icon: "askvio-icon.png"
-
+heroImage: "askvio-widget-answer.webp"
+screenshotOrientation: "landscape"
+heroImageAlt: "The AskVio assistant answering a shopper's question on a demo coffee store"
+screenshots:
+  - src: "askvio-unmet-demand.webp"
+    caption: "Unmet demand: products visitors asked for that the catalog doesn't carry, ranked by asks."
+  - src: "askvio-agent-traffic.webp"
+    caption: "AI agent traffic: what assistants like ChatGPT ask your site, and how often they get no answer."
+  - src: "askvio-security-webmcp.webp"
+    caption: "Security settings, including WebMCP access so AI agents can use the site's tools."
 ---
 
-**AskVio** is an AI-powered conversational search widget designed to sit directly on top of existing websites and documentation, turning static content into an interactive, queryable knowledge base.
+**AskVio** is the intent layer for your website. It is live in production at [askvio.app](https://askvio.app).
 
-The problem AskVio addresses is structural, not cosmetic. Most websites still rely on traditional search boxes, rigid navigation trees, and FAQs that don’t scale with content growth. Users don’t want to *browse* anymore — they want to *ask*. And companies don’t want to rebuild their entire information architecture just to enable that.
+Every day, visitors ask for the size you don't stock, the policy you never wrote down, the product that would have closed the sale. None of it shows up in GA4. GA4 tells you the bounce rate and heatmaps show where people clicked, but neither tells you what the customer typed, got no answer for, and quietly left to find somewhere else. I spent ten years in analytics teams looking at that blind spot. AskVio is my attempt to close it.
 
-AskVio acts as a thin but powerful layer between users and content. It ingests website pages and documents (PDFs, guides, help articles), indexes them, and exposes a **GPT-like conversational interface** that answers questions using only the available sources — not generic internet knowledge.
+## How it works
 
-A key design principle is **groundedness**. AskVio is not a chatbot that hallucinates confidently. Every answer is derived from indexed content, making it suitable for customer support, documentation, onboarding, and internal knowledge use cases. If the answer is not present in the source material, AskVio says so.
+AskVio answers each visitor from the site's own content (sitemap, help docs, PDFs), says so honestly when it doesn't know, and captures every miss in the customer's own words. It answers only above a confidence threshold the site owner controls, so it doesn't invent a shipping promise. When the content doesn't cover a question, the question is logged as a gap.
 
-From a technical perspective, AskVio is intentionally modular:
+Each week the **Monday Brief** lands in the inbox: what customers asked for most, the costliest gap, and the one fix worth making first. A chatbot gives you conversations; AskVio gives you a to-do list.
 
-* An **embeddable JavaScript widget** (HTML/JS tag) that can be dropped into any site
-* A backend built on **Firebase and Cloud Functions** for routing, logging, and multi-tenancy
-* A **RAG pipeline** backed by a vector database to store embeddings and retrieve relevant content
-* **OpenAI models** used selectively to balance cost, latency, and answer quality
+## Built by an analyst
 
-One of the core challenges in building AskVio was cost discipline. Conversational search scales with usage, not users. This led to a **usage-based pricing mindset** from the start, with clear boundaries around query volume, ingestion limits, and response complexity.
+The part I care most about is measurement. Every answer, refusal and gap is sent as a structured event to the customer's own GA4 property, so their analyst can compare sessions that asked a question with those that didn't, using their own attribution. No vendor ROI slides.
 
-AskVio is also intentionally brand-agnostic. It’s not a “chatbot personality.” It adapts visually and tonally to the host website, behaving more like an **AI interface component** than a standalone product.
+That data is also where the **Failed Intent Rate** comes from: the percentage of visitor questions and searches that got no useful answer, or none above a meaningful confidence threshold. It is the KPI I think every GA4 dashboard is missing, and I presented it at MeasureCamp Los Angeles ([the full definition is on the AskVio blog](https://askvio.app/blog/failed-intent-rate/)).
 
-On a personal level, AskVio represents a shift toward **infrastructure thinking**. Unlike consumer apps, its success depends less on UX delight and more on reliability, accuracy, and predictable behavior. Building it forced careful decisions around multi-tenancy, isolation, analytics, and observability — all the things that matter once software is meant to be embedded into other products.
+## Safe to go live
 
-AskVio is still an MVP, but the direction is clear:
-it’s not about replacing search — it’s about making information finally accessible in the way users already think and speak.
+* One script tag, on any platform, not only Shopify
+* Every change is validated in an isolated test environment, then published with one click and versioned, so reverting takes seconds
+* Origin allowlists, signed init tokens, per-IP rate limiting and abuse blocking
+* Answers visitors in their own language, with personal data scrubbed before any analysis
+* A WebMCP layer, so AI agents visiting the site can use its tools, and an AI agent traffic report to see what they ask
+
+## Under the hood
+
+The widget is a lightweight embeddable JavaScript component. The backend runs on Firebase and Cloud Functions for routing, logging and multi-tenancy, with a RAG pipeline over a vector index and OpenAI models used selectively to balance cost, latency and answer quality. Pricing is usage-based, because conversational search scales with questions, not seats.
+
+Read more, run the free Silent Demand audit, or start for free at [askvio.app](https://askvio.app).

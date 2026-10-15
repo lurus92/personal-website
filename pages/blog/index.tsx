@@ -24,7 +24,7 @@ const BlogPage = ({ posts }: { posts: BlogMeta[] }) => {
     >
       {featured && (
         <Reveal>
-          <Link href={`/blog/${featured.slug}`} className="group grid gap-8 md:grid-cols-12 md:items-center">
+          <Link href={`/blog/${featured.slug}`} data-analytics-event="select_content" data-analytics-category="Blog post" data-analytics-label={featured.title} data-analytics-location="Blog featured" className="group grid gap-8 md:grid-cols-12 md:items-center">
             {featured.cover && (
               <div className="md:col-span-7 relative aspect-[16/10] overflow-hidden rounded-2xl border border-line bg-white">
                 <Image

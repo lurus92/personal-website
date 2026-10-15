@@ -16,7 +16,7 @@ export const formatDate = (d: string, month: 'short' | 'long' = 'short') =>
 
 // One row in the writing index: meta column on the left, title + summary on the right.
 const BlogCard = ({ post }: { post: BlogMeta }) => (
-  <Link href={`/blog/${post.slug}`} className="group grid gap-2 py-8 md:grid-cols-[200px_1fr] md:gap-10">
+  <Link href={`/blog/${post.slug}`} data-analytics-event="select_content" data-analytics-category="Blog post" data-analytics-label={post.title} data-analytics-location="Blog list" className="group grid gap-2 py-8 md:grid-cols-[200px_1fr] md:gap-10">
     <p className="font-mono text-xs text-muted md:pt-1.5">
       {formatDate(post.date)}
       {post.place ? <span className="block md:mt-1">{post.place}</span> : null}

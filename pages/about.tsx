@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import CloseCta from '../components/CloseCta';
 import Layout from '../components/Layout';
+import Logo, { LOGOS, LogoId } from '../components/Logo';
 import PageHeader from '../components/PageHeader';
 import Reveal from '../components/Reveal';
 import luigiPortrait from '../public/images/luigi.jpg';
@@ -9,7 +10,7 @@ import luigiPortrait from '../public/images/luigi.jpg';
 const timeline = [
   {
     role: 'Data Collection Lead',
-    company: 'Sunrise',
+    company: 'Sunrise', logo: 'sunrise' as LogoId,
     timeframe: 'Nov 2024 - Jun 2026',
     location: 'Zurich',
     details: [
@@ -20,7 +21,7 @@ const timeline = [
   },
   {
     role: 'Senior Measurement Partner',
-    company: 'TikTok',
+    company: 'TikTok', logo: 'tiktok' as LogoId,
     timeframe: 'Aug 2023 - Oct 2024',
     location: 'Dubai',
     details: [
@@ -31,7 +32,7 @@ const timeline = [
   },
   {
     role: 'Senior Manager Online Analytics, Loyalty & Retail',
-    company: 'Alshaya Group',
+    company: 'Alshaya Group', logo: 'alshaya' as LogoId,
     timeframe: 'Feb 2021 - Jul 2023',
     location: 'Dubai',
     details: [
@@ -42,7 +43,7 @@ const timeline = [
   },
   {
     role: 'Digital Analytics Manager, Senior Consultant',
-    company: 'Vodafone UK / Group',
+    company: 'Vodafone UK / Group', logo: 'vodafone' as LogoId,
     timeframe: 'Jul 2018 - Jan 2021',
     location: 'London & Milan',
     details: [
@@ -53,7 +54,7 @@ const timeline = [
   },
   {
     role: 'Web Analyst / JS Developer (BI Area)',
-    company: 'lastminute.com',
+    company: 'lastminute.com', logo: 'lastminute' as LogoId,
     timeframe: 'Dec 2016 - Jul 2018',
     location: 'Chiasso',
     details: [
@@ -104,6 +105,8 @@ const About = () => (
       >
         <a
           href="/CV-LuigiRusso.pdf"
+              target="_blank"
+              rel="noopener"
           className="btn-ghost"
           data-analytics-event="button_click"
           data-analytics-label="Download CV"
@@ -154,9 +157,12 @@ const About = () => (
           {timeline.map((item, i) => (
             <li key={item.role} className="border-b border-line">
               <Reveal delay={0.03 * i} className="grid gap-3 py-8 md:grid-cols-[220px_1fr] md:gap-10">
-                <div>
-                  <p className="font-mono text-xs text-muted">{item.timeframe}</p>
-                  <p className="mt-1 font-mono text-xs text-muted">{item.location}</p>
+                <div className="flex items-start justify-between gap-4 md:block">
+                  <div>
+                    <p className="font-mono text-xs text-muted">{item.timeframe}</p>
+                    <p className="mt-1 font-mono text-xs text-muted">{item.location}</p>
+                  </div>
+                  <Logo id={item.logo} height={Math.round(LOGOS[item.logo].h * 0.9)} className="text-fg/70 md:mt-5" />
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold tracking-tight">

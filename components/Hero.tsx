@@ -22,7 +22,7 @@ const Hero = () => {
   });
 
   return (
-    <section className="theme-navy bg-bg text-fg">
+    <section data-analytics-section="Hero" className="theme-navy bg-bg text-fg">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16 md:pt-16 md:pb-20 grid gap-12 lg:grid-cols-12 lg:items-end">
         <div className="lg:col-span-7">
           <motion.h1
@@ -39,6 +39,10 @@ const Hero = () => {
                   href={l.href}
                   {...(l.external ? { target: '_blank', rel: 'noreferrer' } : {})}
                   className="group flex items-baseline justify-between gap-6 py-4"
+                  data-analytics-event="button_click"
+                  data-analytics-label={l.proof}
+                  data-analytics-category="Hero lines"
+                  data-analytics-location="Home"
                 >
                   <span className="text-xl sm:text-2xl font-medium tracking-tight group-hover:text-accent transition-colors">
                     {l.text}
@@ -64,6 +68,8 @@ const Hero = () => {
             </Link>
             <a
               href="/CV-LuigiRusso.pdf"
+              target="_blank"
+              rel="noopener"
               className="inline-flex items-center rounded-lg border border-line px-5 py-3 text-sm font-semibold text-fg hover:border-fg/50 active:scale-[0.98] transition-all"
               data-analytics-event="button_click"
               data-analytics-label="Download CV"

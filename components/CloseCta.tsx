@@ -7,7 +7,7 @@ interface CloseCtaProps {
 
 // Navy closing band: bookends the page with the nav/header.
 const CloseCta = ({ title = 'Building something, or hiring for analytics?', location }: CloseCtaProps) => (
-  <section className="theme-navy bg-bg text-fg">
+  <section data-analytics-section="Close" className="theme-navy bg-bg text-fg">
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-24 flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
       <div>
         <h2 className="max-w-[20ch] text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.03em] leading-[1.05]">{title}</h2>
