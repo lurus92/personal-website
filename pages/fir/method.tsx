@@ -111,7 +111,7 @@ const FirMethod = () => (
 
       <h2>How a question counts as answered</h2>
       <ol>
-        <li>For each question, the 3 most relevant pages the agent read are selected.</li>
+        <li>For each question, the 5 most relevant pages the agent read are selected (language versions of the same page count once).</li>
         <li>
           A language model (gpt-4o-mini, temperature 0) reads only those excerpts, with no outside knowledge of the company, and decides whether a
           shopper could get a specific, usable answer.

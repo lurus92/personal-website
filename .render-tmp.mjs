@@ -1,0 +1,11 @@
+import { readFileSync } from 'node:fs';
+import matter from 'gray-matter';
+import { remark } from 'remark';
+import gfm from 'remark-gfm';
+import rehype from 'remark-rehype';
+import raw from 'rehype-raw';
+import stringify from 'rehype-stringify';
+const { data, content } = matter(readFileSync(process.argv[2], 'utf8'));
+const html = String(await remark().use(gfm).use(rehype, { allowDangerousHtml: true }).use(raw).use(stringify).process(content));
+console.log(JSON.stringify(data)); console.log('html chars', html.length, 'svg', html.includes('<svg'), 'h2', (html.match(/<h2/g)||[]).length);
+console.log('words', content.split(/\s+/).length);

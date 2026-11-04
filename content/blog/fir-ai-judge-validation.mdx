@@ -1,0 +1,192 @@
+---
+title: "How do you know an AI judge is right? Validating the model behind fir-audit"
+date: "2026-11-10"
+tags: ["AI", "LLM evaluation", "Failed Intent Rate", "Methodology"]
+summary: "Every analytics team trying LLMs hits the same question: why should I trust the model's verdicts? Here is how I tested the judge behind fir-audit, with the real numbers, the bugs and the idea I threw away."
+place: "Zurich"
+hidden: false
+---
+
+(Disclosure: I build AskVio, an assistant for websites, and I coined the Failed Intent Rate. This post covers the method only. Results for individual shops stay under embargo until MeasureCamp Zurich on 21 November.)
+
+Every analytics team that starts using LLMs ends up asking the same question, usually a week after the first impressive demo: *how do we know the model is right?*
+
+I've had to answer it for my own work. For the last few weeks I've been measuring the **Failed Intent Rate (FIR)** of 20 DACH online shops: the share of ordinary shopper questions ("are returns free?", "do you deliver to Switzerland?", "can I pay by invoice?") that a site can't answer from its own public pages. The tool that does this, fir-audit, crawls a site the way a simple AI agent would, then asks a language model whether a shopper could get a usable answer from what was found.
+
+<aside class="explainer">
+<strong>Failed Intent Rate (FIR)</strong>
+<math display="block"><mrow><mtext>FIR</mtext><mo>=</mo><mfrac><mtext>questions not answered</mtext><mtext>questions asked</mtext></mfrac></mrow></math>
+<p>A question fails when the site's public pages contain no specific, usable answer. "Contact us for details" counts as a failure. The full method, including how shops can correct their results, is at <a href="/fir/method/">lrusso.it/fir/method</a>.</p>
+</aside>
+
+That makes the model the judge, and a judge nobody has checked is just an opinion with a confidence score. So before any number goes on a slide, I measured how often the judge is wrong. Here's how, including the parts that didn't work.
+
+## The setup: no quote, no pass
+
+<figure class="viz">
+<ol class="flow">
+<li><strong>Crawl</strong>Up to 40 public pages per shop, static HTML, robots.txt respected.</li>
+<li><strong>Retrieve</strong>Pick the 5 most relevant pages for each question.</li>
+<li><strong>Judge</strong>The model reads only those excerpts and decides: answered or not.</li>
+<li><strong>Quote check</strong>A pass needs a word-for-word quote that is found on the page.</li>
+<li class="flow-human"><strong>Human review</strong>Every failure, and a sample of passes, checked by a person.</li>
+</ol>
+<figcaption>How one shopper question becomes a verdict. The first four steps are automatic. The fifth one is me.</figcaption>
+</figure>
+
+For each question, fir-audit picks the most relevant pages it crawled and gives only those excerpts to the model (gpt-4o-mini, temperature 0). The model gets no outside knowledge of the company. It decides whether the question is answered, and if it says yes it has to **quote the page word for word**. fir-audit then looks for that quote in the page text. If the quote isn't there, the pass doesn't count.
+
+That one rule does most of the work. A model that's "pretty sure" a returns policy exists has to prove it with text you can find on the page. "Contact us for details" is not an answer, and neither is a quote the model made up.
+
+<aside class="explainer">
+<strong>LLM as a judge, and why retrieval matters</strong>
+<p>Instead of a person reading every page, a language model reads a few selected excerpts and gives a verdict. The model can only judge what it is shown, so picking the right pages first (<a href="https://en.wikipedia.org/wiki/Retrieval-augmented_generation">retrieval</a>) matters as much as the model itself. Temperature 0 makes the model give the same answer to the same input every time, so a run can be repeated.</p>
+</aside>
+
+## The bug that came first
+
+The first full run looked bad for the shops, and it turned out the problem was mine. **31 of the 75 failures were passes the model had got right**, which the quote check then threw out.
+
+The cause was HTML entities. Many German-language shops serve `R&uuml;ckgabe` in their HTML, not `Rückgabe`. The model read the text correctly and quoted "Rückgabe". My quote check compared that with the raw `&uuml;` and found nothing. The same bug hurt retrieval too: a page about *Rückgabe* never matched the keyword "rückgabe".
+
+<figure class="viz">
+<table class="diff">
+<thead><tr><th></th><th>In the page's HTML</th><th>Model's quote</th><th>Quote check</th></tr></thead>
+<tbody>
+<tr><th>First run</th><td class="mono">R&amp;uuml;ckgabe</td><td class="mono">Rückgabe</td><td class="is-bad">Not found, so a failure</td></tr>
+<tr><th>After the fix</th><td class="mono">Rückgabe</td><td class="mono">Rückgabe</td><td class="is-good">Found, so a pass</td></tr>
+</tbody>
+</table>
+<figcaption>One encoding detail, 31 wrong failures. The model was right; the checker was not.</figcaption>
+</figure>
+
+<aside class="explainer">
+<strong>HTML entities</strong>
+<p>HTML can write special characters as codes: <code>&amp;uuml;</code> for ü, <code>&amp;euro;</code> for €. Browsers turn them back into letters, so a visitor never sees them. A program reading the raw HTML does, unless it decodes them first. <a href="https://en.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references">Full list on Wikipedia.</a></p>
+</aside>
+
+Decoding entities on both sides fixed it. The lesson is bigger than the bug, though. **A strict verification step can fail in a way that looks exactly like the thing you're measuring.** Without a person reading a sample, I'd have reported a failure rate inflated by an encoding problem and called it a finding about the shops.
+
+## Round 1: 50 verdicts checked by hand
+
+After the fix I sampled 50 verdicts, opened every evidence page myself, and wrote down my own pass or fail without looking at the model's.
+
+<aside class="explainer">
+<strong>Human validation, false passes and false fails</strong>
+<p>To test a judge, you have people label the same cases independently and compare (<a href="https://en.wikipedia.org/wiki/Inter-rater_reliability">inter-rater reliability</a>). Disagreements come in two kinds. A <strong>false pass</strong> is the model saying "answered" when it isn't (a false positive). A <strong>false fail</strong> is the model missing an answer that is there (a false negative). <a href="https://en.wikipedia.org/wiki/False_positives_and_false_negatives">More on the two error types.</a></p>
+<p>The simplest score is raw agreement:</p>
+<math display="block"><mrow><msub><mi>p</mi><mi>o</mi></msub><mo>=</mo><mfrac><mtext>agreements</mtext><mtext>cases checked</mtext></mfrac><mo>=</mo><mfrac><mn>46</mn><mn>50</mn></mfrac><mo>=</mo><mn>0.92</mn></mrow></math>
+</aside>
+
+<figure class="viz">
+<div class="cm-head"><span class="cm-kpi"><b>92%</b><span>agreement (46 of 50)</span></span><span class="cm-kpi"><b>κ 0.78</b><span>Cohen's kappa</span></span></div>
+<table class="cm">
+<thead><tr><th></th><th>I said pass</th><th>I said fail</th></tr></thead>
+<tbody>
+<tr><th>Model said pass</th><td class="cm-agree"><b>36</b>agree</td><td><b>0</b>false pass</td></tr>
+<tr><th>Model said fail</th><td class="cm-miss"><b>4</b>false fail</td><td class="cm-agree"><b>10</b>agree</td></tr>
+</tbody>
+</table>
+<figcaption>Round 1. The model never claimed an answer that wasn't there. All four disagreements were answers it missed.</figcaption>
+</figure>
+
+Kappa matters here because raw agreement flatters a judge when most answers fall on one side. If 72% of verdicts are passes, a judge that always says "pass" scores 72% agreement and learns nothing. Kappa corrects for the agreement you'd get by chance. 0.78 is usually read as substantial agreement.
+
+<aside class="explainer">
+<strong>Cohen's kappa</strong>
+<p>Kappa compares observed agreement with the agreement two raters would reach by luck:</p>
+<math display="block"><mrow><mi>κ</mi><mo>=</mo><mfrac><mrow><msub><mi>p</mi><mi>o</mi></msub><mo>−</mo><msub><mi>p</mi><mi>e</mi></msub></mrow><mrow><mn>1</mn><mo>−</mo><msub><mi>p</mi><mi>e</mi></msub></mrow></mfrac></mrow></math>
+<p>Chance agreement comes from each rater's pass rate. In round 1 the model passed 72% of cases and I passed 80%:</p>
+<math display="block"><mrow><msub><mi>p</mi><mi>e</mi></msub><mo>=</mo><mn>0.72</mn><mo>×</mo><mn>0.80</mn><mo>+</mo><mn>0.28</mn><mo>×</mo><mn>0.20</mn><mo>=</mo><mn>0.632</mn></mrow></math>
+<math display="block"><mrow><mi>κ</mi><mo>=</mo><mfrac><mrow><mn>0.92</mn><mo>−</mo><mn>0.632</mn></mrow><mrow><mn>1</mn><mo>−</mo><mn>0.632</mn></mrow></mfrac><mo>≈</mo><mn>0.78</mn></mrow></math>
+<p>1 is perfect agreement, 0 is no better than chance. Rough reading: above 0.6 is substantial, between 0.4 and 0.6 moderate. <a href="https://en.wikipedia.org/wiki/Cohen%27s_kappa">Cohen's kappa on Wikipedia.</a></p>
+</aside>
+
+All four errors went the same way, and each had a cause I could fix:
+
+1. **Locale duplicates crowding retrieval.** Shops with `/de-CH/` and `/de-DE/` versions of the same page filled the retrieval slots with near-identical copies, so the page with the shipping costs never reached the model. Fix: deduplicate locale variants and show 5 pages instead of 3.
+2. **Condensed quotes.** The model quoted a list of payment methods in a slightly shortened form, and the exact-match check rejected it. Fix: accept the quote when every item in it is on the page.
+3. **"Only within Germany" read as no answer (twice).** Asked "which countries do you deliver to?", the model saw "we deliver exclusively within Germany" and decided the question wasn't answered because no list of countries was given. A shopper in Zurich would disagree: that's a very clear answer. Fix: one line in the prompt saying a restrictive answer still answers the question.
+
+## Round 2: why kappa fell to 0.51
+
+I re-ran the audit with the fixes and checked a fresh sample of 25.
+
+<figure class="viz">
+<div class="cm-head"><span class="cm-kpi"><b>80%</b><span>agreement (20 of 25)</span></span><span class="cm-kpi"><b>κ 0.51</b><span>Cohen's kappa</span></span></div>
+<table class="cm">
+<thead><tr><th></th><th>I said pass</th><th>I said fail</th></tr></thead>
+<tbody>
+<tr><th>Model said pass</th><td class="cm-agree"><b>16</b>agree</td><td><b>0</b>false pass</td></tr>
+<tr><th>Model said fail</th><td class="cm-miss"><b>5</b>false fail</td><td class="cm-agree"><b>4</b>agree</td></tr>
+</tbody>
+</table>
+<figcaption>Round 2. Again no false passes; five missed answers in a sample with only nine failures.</figcaption>
+</figure>
+
+On the face of it, the judge got worse after I fixed it. It didn't, really, and working out why is the most useful thing I learned about kappa.
+
+<figure class="viz">
+<div class="bars" role="img" aria-label="Agreement by round: round 1, 92% against 63% expected by chance; round 2, 80% against 60% expected by chance.">
+<div class="bar-row"><span class="bar-label">Round 1</span><span class="bar-track"><span class="bar-fill" style="width:92%"></span><span class="bar-tick" style="left:63%"></span></span><span class="bar-value">92%</span><span class="bar-note">Chance alone: 63%. κ 0.78</span></div>
+<div class="bar-row"><span class="bar-label">Round 2</span><span class="bar-track"><span class="bar-fill" style="width:80%"></span><span class="bar-tick" style="left:60%"></span></span><span class="bar-value">80%</span><span class="bar-note">Chance alone: 60%. κ 0.51</span></div>
+</div>
+<figcaption>Bars show agreement between the model and me; the black tick is the agreement two raters with the same pass rates would reach by luck. Kappa only counts the part to the right of the tick, which is why it fell faster than raw agreement.</figcaption>
+</figure>
+
+First, every error in round 2 was again a false fail: in this sample, the model never claimed an answer that wasn't there. Three of the five were the quote check again. The model had found the right sentence (a 2-year warranty, a delivery window, where to track an order), but the quote didn't match because a clause had been dropped or a word was split across HTML tags. The other two were real retrieval misses: invoice payment explained only on a Klarna page the model wasn't shown, and an international shipping answer on a FAQ page that wasn't in the top results.
+
+Second, kappa is unforgiving on small samples. With 25 verdicts, each error moves it a lot. Five one-directional errors in a sample with only 9 failures pull the chance-corrected score down much harder than 80% raw agreement suggests. The honest reading is: **the judge is reliable when it says "answered", and it under-detects answers that are there.** For a metric about failure, that's the safe direction to be wrong in, but it means raw model failures can't be published as they are.
+
+## The fact-checker I built and dropped
+
+The obvious next idea was to put a second model in charge of checking the first. A verifier would see only the question and the quote, never the page, and reject any pass whose quote didn't actually answer the question.
+
+I built two versions.
+
+- **Version 1** asked for every part of the question to be answered. On two-part questions ("how long is the warranty, *and* how do I claim?") it got strict to the point of being useless: it rejected 23 of 94 passes and **disagreed with my labels in 16 of 18 cases** where we could compare.
+- **Version 2** was told to reject only off-topic quotes and quotes that point somewhere else instead of answering. Better, but it still rejected restrictive answers it had been told to accept ("delivery only to Switzerland and Liechtenstein"), and **disagreed with human labels 10 times out of 54.**
+
+<figure class="viz">
+<div class="bars" role="img" aria-label="Verifier disagreement with human labels: version 1, 16 of 18; version 2, 10 of 54.">
+<div class="bar-row"><span class="bar-label">Verifier v1, strict</span><span class="bar-track"><span class="bar-fill is-bad-fill" style="width:89%"></span></span><span class="bar-value">16 / 18</span></div>
+<div class="bar-row"><span class="bar-label">Verifier v2, narrow</span><span class="bar-track"><span class="bar-fill is-bad-fill" style="width:19%"></span></span><span class="bar-value">10 / 54</span></div>
+</div>
+<figcaption>Share of checked cases where the second model disagreed with a human. Even the better version is wrong about one time in five.</figcaption>
+</figure>
+
+A checker that's wrong about one time in five adds noise; it doesn't add trust. It's now off by default, kept as an option for testing a stronger model later.
+
+I think this is the trap a lot of teams walk into. "LLM-as-judge, checked by another LLM" sounds rigorous. But the second model has its own blind spots, and unless you measure it against people, you've only moved the question of trust one layer back.
+
+## The rule I kept: a person checks every failure
+
+What's left is simple, and cheaper than it sounds:
+
+1. The model judges every question, and a pass needs a quote that's found on the page.
+2. **Every failure is checked by a person.** Only failures I've confirmed count towards FIR.
+3. A sample of passes is checked by hand as well, to measure the error in the direction the human step doesn't catch.
+
+<figure class="viz">
+<div class="stats">
+<div><b>100</b>question-and-shop results scored in the final run</div>
+<div><b>60</b>checked by hand, including every failure</div>
+<div class="is-key"><b>2 of 54</b>hand-checked passes were wrong (3.7%)</div>
+</div>
+<math display="block"><mrow><mfrac><mtext>wrong passes</mtext><mtext>passes checked</mtext></mfrac><mo>=</mo><mfrac><mn>2</mn><mn>54</mn></mfrac><mo>≈</mo><mn>3.7</mn><mo>%</mo></mrow></math>
+<figcaption>Final DACH run, with the false pass rate on hand-checked passes. Human effort goes where an error would be most expensive: calling a shop's answer missing.</figcaption>
+</figure>
+
+In the final DACH run, 60 of the 100 scored question-and-shop results were reviewed by hand, including every failure. Of the 54 passes I checked, **2 were wrong (3.7%)**: one cited a sentence about warranty extensions in answer to "how do I contact customer service?", and one cited "the payment methods shown on the website" as if that were a list. The unchecked passes rest on the model plus a verified quote, so if anything the published FIR is slightly *understated*. It isn't overstated.
+
+That asymmetry is deliberate. When you name real companies, a false accusation costs far more than a missed one. So the design puts the human effort where the cost of an error is highest.
+
+## What I'd tell an analytics team starting with LLM judges
+
+- **Label a sample yourself before you trust a single number.** 50 verdicts is enough to find the systematic errors. Nothing else I did was worth more.
+- **Report kappa next to agreement**, and look at which *direction* the errors go. Two judges with the same accuracy can be wrong in opposite ways.
+- **Make the model show its evidence**, and check that evidence mechanically. Then validate the checker too, because that's where my biggest bug was.
+- **Be sceptical of model-checks-model setups** until you've measured the second model against people.
+- **Put humans where errors are expensive**, not spread evenly across everything.
+
+The full DACH results, shop by shop, are at **MeasureCamp Zurich on 21 November**, and fir-audit goes open source on 20 November. The method, including the access rules and how shops can correct their results, is at [lrusso.it/fir/method](/fir/method/).

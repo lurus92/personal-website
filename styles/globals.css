@@ -151,3 +151,312 @@ a {
 .prose figcaption {
   @apply mt-2 text-sm text-muted;
 }
+
+/*
+ * Long-form visual blocks, usable from Markdown via raw HTML
+ * (first used in the FIR validation post). Plain CSS on purpose:
+ * Tailwind does not scan content/, so utility classes there would be purged.
+ * Rules: no card-in-card, one accent (green) plus one muted semantic red for
+ * errors, radius 8px inside / 12px for the explainer surface, tabular numbers.
+ */
+.prose {
+  --bad-ink: 159 47 45;
+  --bad-bg: 251 236 235;
+  --bad-fill: 196 104 98;
+}
+
+/* Explainer: a quiet definition surface, no border, no label */
+.prose aside.explainer {
+  margin-top: 1.75rem;
+  border-radius: 12px;
+  background: rgb(var(--fg) / 0.035);
+  padding: 1.125rem 1.375rem 1.25rem;
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgb(var(--fg) / 0.8);
+}
+.prose aside.explainer > strong:first-child {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 15.5px;
+  color: rgb(var(--fg));
+}
+.prose aside.explainer p {
+  margin: 0;
+}
+
+/* Figures: no frame, the content carries the structure */
+.prose figure.viz {
+  margin: 2.5rem 0;
+}
+.prose figure.viz figcaption {
+  margin-top: 0.875rem;
+  font-size: 14px;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+/* Pipeline: a numbered rail, horizontal on desktop, vertical on phones */
+.prose ol.flow {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1rem;
+  counter-reset: flow;
+}
+.prose ol.flow > li {
+  counter-increment: flow;
+  margin: 0 !important;
+  padding: 0.75rem 0 0;
+  border-top: 2px solid rgb(var(--line));
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgb(var(--muted));
+}
+.prose ol.flow > li::before {
+  content: counter(flow, decimal-leading-zero);
+  display: block;
+  margin-bottom: 0.375rem;
+  font-family: var(--font-geist-mono, ui-monospace), ui-monospace, monospace;
+  font-size: 12px;
+  color: rgb(var(--muted));
+}
+.prose ol.flow > li strong {
+  display: block;
+  margin-bottom: 0.125rem;
+  font-size: 15px;
+  color: rgb(var(--fg));
+}
+.prose ol.flow > li.flow-human {
+  border-top-color: rgb(var(--accent));
+}
+.prose ol.flow > li.flow-human::before {
+  color: rgb(var(--accent-ink));
+}
+@media (max-width: 639px) {
+  .prose ol.flow {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .prose ol.flow > li {
+    border-top: 0;
+    border-left: 2px solid rgb(var(--line));
+    padding: 0 0 1rem 1rem;
+  }
+  .prose ol.flow > li:last-child {
+    padding-bottom: 0;
+  }
+  .prose ol.flow > li.flow-human {
+    border-left-color: rgb(var(--accent));
+  }
+}
+
+/* Diff table: raw vs. decoded, with the check result */
+.prose table.diff {
+  font-size: 14.5px;
+}
+.prose table.diff th {
+  font-weight: 500;
+  font-size: 13px;
+  color: rgb(var(--muted));
+}
+.prose table.diff td.mono {
+  font-family: var(--font-geist-mono, ui-monospace), ui-monospace, monospace;
+  font-size: 14px;
+  color: rgb(var(--fg));
+}
+.prose .is-bad { color: rgb(var(--bad-ink)); font-weight: 600; }
+.prose .is-good { color: rgb(var(--accent-ink)); font-weight: 600; }
+
+/* Confusion matrix */
+.prose table.cm {
+  width: 100%;
+  max-width: 30rem;
+  border-collapse: separate;
+  border-spacing: 6px;
+  margin-left: -6px;
+  font-size: 13.5px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.prose table.cm th,
+.prose table.cm td {
+  border: 0;
+  padding: 0.625rem 0.5rem;
+  vertical-align: middle;
+}
+.prose table.cm thead th {
+  padding-bottom: 0;
+}
+.prose table.cm th {
+  font-weight: 500;
+  font-size: 13px;
+  color: rgb(var(--muted));
+}
+.prose table.cm tbody th {
+  text-align: right;
+  padding-right: 0.75rem;
+  width: 32%;
+}
+.prose table.cm td {
+  border-radius: 8px;
+  background: rgb(var(--fg) / 0.04);
+  color: rgb(var(--muted));
+}
+.prose table.cm td b {
+  display: block;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: rgb(var(--fg) / 0.45);
+}
+.prose table.cm td.cm-agree {
+  background: rgb(var(--accent) / 0.1);
+}
+.prose table.cm td.cm-agree b {
+  color: rgb(var(--accent-ink));
+}
+.prose table.cm td.cm-miss {
+  background: rgb(var(--bad-bg));
+}
+.prose table.cm td.cm-miss b {
+  color: rgb(var(--bad-ink));
+}
+.prose .cm-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 1.25rem;
+  margin-bottom: 0.5rem;
+  font-variant-numeric: tabular-nums;
+}
+.prose .cm-head .cm-kpi {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.prose .cm-head b {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: rgb(var(--fg));
+}
+.prose .cm-head .cm-kpi > span {
+  font-size: 14px;
+  color: rgb(var(--muted));
+}
+
+/* Horizontal bars in HTML, so labels stay readable on phones */
+.prose .bars {
+  display: grid;
+  gap: 1.125rem;
+  font-variant-numeric: tabular-nums;
+}
+.prose .bar-row {
+  display: grid;
+  grid-template-columns: 9.5rem minmax(0, 1fr) 4.5rem;
+  align-items: center;
+  column-gap: 1rem;
+  font-size: 14px;
+}
+.prose .bar-label {
+  color: rgb(var(--fg));
+}
+.prose .bar-track {
+  position: relative;
+  height: 10px;
+  border-radius: 4px;
+  background: rgb(var(--fg) / 0.07);
+}
+.prose .bar-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 4px;
+  background: rgb(var(--accent));
+}
+.prose .bar-fill.is-bad-fill {
+  background: rgb(var(--bad-fill));
+}
+.prose .bar-tick {
+  position: absolute;
+  top: -5px;
+  bottom: -5px;
+  width: 2px;
+  margin-left: -1px;
+  background: rgb(var(--fg));
+}
+.prose .bar-value {
+  font-weight: 600;
+  color: rgb(var(--fg));
+  text-align: right;
+}
+.prose .bar-note {
+  grid-column: 2 / 4;
+  margin-top: 0.375rem;
+  font-size: 13px;
+  color: rgb(var(--muted));
+}
+@media (max-width: 639px) {
+  .prose .bar-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: 0.375rem;
+  }
+  .prose .bar-label { grid-column: 1 / 3; }
+  .prose .bar-note { grid-column: 1 / 3; margin-top: 0; }
+}
+
+/* Stats: plain numbers on a hairline, no tiles */
+.prose .stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 1rem 1.5rem;
+  border-top: 1px solid rgb(var(--line));
+  padding-top: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+.prose .stats > div {
+  font-size: 14px;
+  line-height: 1.45;
+  color: rgb(var(--muted));
+}
+.prose .stats b {
+  display: block;
+  margin-bottom: 0.125rem;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: rgb(var(--fg));
+}
+.prose .stats .is-key b {
+  color: rgb(var(--accent-ink));
+}
+
+/* Display maths (native MathML) */
+.prose math[display="block"] {
+  display: block;
+  margin: 1.25rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+  font-family: "STIX Two Math", "Cambria Math", "Latin Modern Math", math;
+  font-size: 1.15em;
+  color: rgb(var(--fg));
+}
+.prose math mtext {
+  font-family: var(--font-geist-sans, system-ui), system-ui, sans-serif;
+  font-size: 0.82em;
+}
+.prose aside.explainer math[display="block"] {
+  margin: 0.75rem 0;
+  font-size: 1.08em;
+}
+.prose aside.explainer p + p,
+.prose aside.explainer math + p {
+  margin-top: 0.5rem;
+}
+.prose figure.viz .stats + math[display="block"] {
+  margin-top: 1.25rem;
+}
