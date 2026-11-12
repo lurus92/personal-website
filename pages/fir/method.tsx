@@ -41,7 +41,9 @@ const FirMethod = () => (
         <li>An openly identified agent read each shop&apos;s public pages the way many AI assistants do: plain HTML, no JavaScript, respecting robots.txt.</li>
         <li>It looked for answers to the same 10 questions shoppers ask before and after buying.</li>
         <li>
-          <strong>Failed Intent Rate (FIR)</strong> = questions the site could not answer ÷ questions asked. Lower is better.
+          <strong>Failed Intent Rate (FIR)</strong> = questions the site could not answer ÷ questions asked. Lower is better. This is the{' '}
+          <a href="/fir/">audit variant of FIR</a>, measured from outside on public pages. It is not the same number as live FIR, which
+          comes from real visitor questions.
         </li>
         <li>Every unanswered question was checked by hand before it counted.</li>
       </ul>
@@ -163,8 +165,9 @@ const FirMethod = () => (
 
       <h2>Who runs this</h2>
       <p>
-        Luigi Russo, an analytics lead based in Zurich (previously TikTok, Vodafone and Sunrise), who coined the Failed Intent Rate metric.
-        Disclosure: he also builds <a href="https://askvio.app">AskVio</a>, an assistant for websites. The study is independent of AskVio, and a
+        Luigi Russo, an analytics lead based in Zurich (previously TikTok, Vodafone and Sunrise), who coined the Failed Intent Rate metric. The{' '}
+        <a href="https://askvio.app/blog/failed-intent-rate/">original definition</a> was published on the AskVio blog in May 2026 and first presented at MeasureCamp Los Angeles on 30 May 2026; see{' '}
+        <a href="/fir/">how the two variants differ</a>. Disclosure: he also builds <a href="https://askvio.app">AskVio</a>, an assistant for websites. The study is independent of AskVio, and a
         shop&apos;s result does not depend on using it.
       </p>
     </article>
