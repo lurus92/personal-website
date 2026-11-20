@@ -2,7 +2,7 @@ import Layout from '../../components/Layout';
 import PageHeader from '../../components/PageHeader';
 
 // Methods page for the FIR DACH pilot (MeasureCamp Zurich, 21 Nov 2026).
-// Deliberately contains no per-shop results: those are published on 21 Nov.
+// Deliberately contains no per-shop results: those live on /fir/dach-2026/.
 
 const QUESTIONS: [string, string][] = [
   ['returns-window', 'How many days do I have to return an item?'],
@@ -30,8 +30,12 @@ const FirMethod = () => (
         narrow
         kicker="Failed Intent Rate · DACH e-commerce pilot · Method"
         title="Can an AI assistant answer your shoppers' questions from your website?"
-        intro="How the study works, so anyone in a shop's team can check a result. Results for each shop go privately to that shop first and are published on 21 November 2026."
-      />
+        intro="How the study works, so anyone in a shop's team can check a result. Results for each shop went privately to that shop first."
+      >
+        <a href="/fir/dach-2026/" className="btn-accent">
+          The results
+        </a>
+      </PageHeader>
     }
   >
     <article className="prose max-w-3xl mx-auto">

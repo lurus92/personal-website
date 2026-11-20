@@ -10,10 +10,12 @@ import Logo, { LogoId } from '../components/Logo';
 import { ProjectMeta } from '../components/ProjectCard';
 import Reveal from '../components/Reveal';
 import { getPostMetas, getProjectMetas } from '../lib/content';
+import type { Dach2026Headline } from '../lib/fir';
 
 interface HomeProps {
   projects: ProjectMeta[];
   posts: BlogMeta[];
+  fir: Dach2026Headline;
 }
 
 const personJsonLd = {
@@ -54,7 +56,7 @@ const Arrow = () => (
   <span aria-hidden="true" className="inline-block transition-transform group-hover:translate-x-0.5">→</span>
 );
 
-export default function Home({ projects, posts }: HomeProps) {
+export default function Home({ projects, posts, fir }: HomeProps) {
   const [featured, ...rest] = posts;
   const [lead, ...others] = projects;
 
@@ -132,6 +134,54 @@ export default function Home({ projects, posts }: HomeProps) {
                 </li>
               ))}
             </ul>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Research: the Failed Intent Rate studies (hub at /fir/) */}
+      <section data-analytics-section="Research" className="theme-navy bg-bg text-fg">
+        <div className={`${container} py-16 md:py-20 grid gap-10 lg:grid-cols-12 lg:items-end`}>
+          <Reveal className="lg:col-span-7">
+            <p className="font-mono text-xs text-muted">Research · Failed Intent Rate</p>
+            <h2 className={`${h2} mt-3 max-w-[18ch]`}>Can an AI agent use your website?</h2>
+            <p className="mt-4 max-w-[56ch] text-lg text-muted">
+              I coined the Failed Intent Rate: the share of visitor questions a site fails to answer. Now I measure it across whole markets,
+              with an open-source tool and every failure checked by hand.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
+              <Link href="/fir/dach-2026/" className="group inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:text-fg transition-colors" data-analytics-event="button_click" data-analytics-label="FIR DACH 2026" data-analytics-category="Home">
+                {fir ? 'The DACH 2026 results' : 'The DACH 2026 study'} <Arrow />
+              </Link>
+              <Link href="/fir/" className="group inline-flex items-center gap-1.5 text-sm font-semibold text-muted hover:text-fg transition-colors" data-analytics-event="button_click" data-analytics-label="What FIR is" data-analytics-category="Home">
+                What FIR is <Arrow />
+              </Link>
+            </div>
+          </Reveal>
+          <Reveal className="lg:col-span-5" delay={0.08}>
+            {fir ? (
+              <dl className="grid grid-cols-3 gap-6 border-t border-line pt-6">
+                <div>
+                  <dt className="sr-only">Shops checked</dt>
+                  <dd className="text-4xl lg:text-5xl font-semibold tracking-[-0.04em] tabular-nums">{fir.total}</dd>
+                  <dd className="mt-2 text-sm text-muted">DACH online shops checked</dd>
+                </div>
+                <div>
+                  <dt className="sr-only">Not readable</dt>
+                  <dd className="text-4xl lg:text-5xl font-semibold tracking-[-0.04em] tabular-nums">{fir.total - fir.scored}</dd>
+                  <dd className="mt-2 text-sm text-muted">never showed the agent a readable help page</dd>
+                </div>
+                <div>
+                  <dt className="sr-only">Failed Intent Rate</dt>
+                  <dd className="text-4xl lg:text-5xl font-semibold tracking-[-0.04em] tabular-nums text-accent">{fir.firPct}%</dd>
+                  <dd className="mt-2 text-sm text-muted">FIR across the {fir.scored} that did</dd>
+                </div>
+              </dl>
+            ) : (
+              <div className="border-t border-line pt-6">
+                <p className="text-4xl lg:text-5xl font-semibold tracking-[-0.04em]">21 Nov 2026</p>
+                <p className="mt-2 text-muted">20 shops in Switzerland, Germany and Austria. Results at MeasureCamp Zurich, online at 18:00 CET.</p>
+              </div>
+            )}
           </Reveal>
         </div>
       </section>
@@ -289,6 +339,7 @@ export default function Home({ projects, posts }: HomeProps) {
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => ({
-  props: { projects: getProjectMetas(), posts: getPostMetas() }
-});
+export const getStaticProps: GetStaticProps = async () => {
+  const { getDach2026Headline } = await import('../lib/fir');
+  return { props: { projects: getProjectMetas(), posts: getPostMetas(), fir: getDach2026Headline() } };
+};

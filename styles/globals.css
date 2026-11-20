@@ -460,3 +460,286 @@ a {
 .prose figure.viz .stats + math[display="block"] {
   margin-top: 1.25rem;
 }
+
+/*
+ * FIR study report (pages/fir/dach-2026.tsx): same rules as the blocks above.
+ * One accent, one muted red, hairlines instead of frames, tabular numbers.
+ */
+
+/* Funnel: earlier steps in a quiet tint, the scored step in the accent */
+.prose .bar-fill.is-quiet-fill {
+  background: rgb(var(--fg) / 0.22);
+}
+.prose .bars-funnel .bar-row {
+  grid-template-columns: 9.5rem minmax(0, 1fr) 3rem;
+}
+@media (max-width: 639px) {
+  .prose .bars-funnel .bar-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
+
+/* Stats: a red key for the bad number */
+.prose .stats .is-bad-key b {
+  color: rgb(var(--bad-ink));
+}
+
+/* Small grey line under a shop name in a table */
+.prose .cell-sub {
+  display: block;
+  font-family: var(--font-geist-mono, ui-monospace), ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 400;
+  color: rgb(var(--muted));
+}
+
+/* robots.txt vs server */
+.prose table.says-does th[scope='row'] {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: rgb(var(--fg));
+}
+.prose table.says-does td {
+  font-size: 14.5px;
+}
+
+/* Results table */
+.prose table.results {
+  font-size: 14.5px;
+  font-variant-numeric: tabular-nums;
+}
+.prose table.results thead th {
+  font-weight: 500;
+  font-size: 13px;
+  color: rgb(var(--muted));
+}
+.prose table.results tbody th {
+  font-weight: 600;
+}
+.prose table.results .num {
+  text-align: right;
+  padding-right: 0;
+}
+.prose table.results td.num {
+  font-weight: 600;
+  color: rgb(var(--fg));
+}
+.prose .is-muted {
+  color: rgb(var(--muted));
+}
+
+/* Shop x question matrix */
+.prose .matrix-wrap {
+  overflow-x: auto;
+  margin: 0 -0.25rem;
+  padding: 0 0.25rem;
+}
+.prose table.matrix {
+  width: auto;
+  border-collapse: separate;
+  border-spacing: 4px;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+.prose table.matrix th,
+.prose table.matrix td {
+  border: 0;
+  padding: 0;
+}
+.prose table.matrix thead th {
+  height: 7.25rem;
+  vertical-align: bottom;
+  font-weight: 500;
+  font-size: 12.5px;
+  color: rgb(var(--muted));
+}
+.prose table.matrix thead th > span {
+  display: inline-block;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  padding-bottom: 0.375rem;
+}
+.prose table.matrix tbody th {
+  padding-right: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  color: rgb(var(--fg));
+  text-align: left;
+}
+.prose table.matrix td.m-pass,
+.prose table.matrix td.m-fail {
+  width: 28px;
+  min-width: 28px;
+  height: 28px;
+  border-radius: 6px;
+}
+.prose .m-pass {
+  background: rgb(var(--accent) / 0.22);
+}
+.prose .m-fail {
+  background: rgb(var(--bad-fill));
+}
+.prose table.matrix td.matrix-fir {
+  padding-left: 0.75rem;
+  text-align: right;
+  font-weight: 600;
+  color: rgb(var(--fg));
+}
+.prose table.matrix thead th.matrix-fir > span {
+  writing-mode: horizontal-tb;
+  transform: none;
+}
+.prose .matrix-legend {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 13px;
+  color: rgb(var(--muted));
+}
+.prose .m-key {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+.prose .m-key + .m-key,
+.prose .matrix-legend .m-key:not(:first-child) {
+  margin-left: 0.75rem;
+}
+@media (max-width: 639px) {
+  .prose table.matrix {
+    border-spacing: 3px;
+  }
+  .prose table.matrix td.m-pass,
+  .prose table.matrix td.m-fail {
+    width: 20px;
+    min-width: 20px;
+    height: 22px;
+    border-radius: 4px;
+  }
+  .prose table.matrix tbody th {
+    font-size: 13px;
+    padding-right: 0.5rem;
+  }
+}
+
+/* FIR hub: study cards */
+.prose .study-list {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid rgb(var(--line));
+}
+.prose .study-list > a,
+.prose .study-list > div {
+  display: grid;
+  gap: 0.25rem;
+  padding: 1.125rem 0;
+  border-bottom: 1px solid rgb(var(--line));
+  text-decoration: none;
+  color: rgb(var(--muted));
+  font-size: 15px;
+  line-height: 1.55;
+}
+.prose .study-list .study-meta {
+  font-family: var(--font-geist-mono, ui-monospace), ui-monospace, monospace;
+  font-size: 12px;
+}
+.prose .study-list .study-title {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: rgb(var(--fg));
+}
+.prose .study-list > a:hover .study-title {
+  color: rgb(var(--accent-ink));
+}
+.prose .study-list .study-nums {
+  margin-top: 0.25rem;
+  font-variant-numeric: tabular-nums;
+  color: rgb(var(--fg) / 0.85);
+}
+.prose .study-list .study-nums b {
+  font-weight: 600;
+  color: rgb(var(--accent-ink));
+}
+
+/* FIR report: the ten questions, two columns on desktop */
+.prose aside.explainer ol.q-list {
+  list-style: none;
+  margin: 0.5rem 0 0.75rem;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.625rem 1.5rem;
+  counter-reset: q;
+}
+.prose aside.explainer ol.q-list > li {
+  counter-increment: q;
+  margin: 0 !important;
+  position: relative;
+  padding-left: 1.75rem;
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+.prose aside.explainer ol.q-list > li::before {
+  content: counter(q, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0.1rem;
+  font-family: var(--font-geist-mono, ui-monospace), ui-monospace, monospace;
+  font-size: 12px;
+  color: rgb(var(--muted));
+}
+.prose aside.explainer ol.q-list .q-short {
+  display: block;
+  font-weight: 600;
+  color: rgb(var(--fg));
+}
+@media (max-width: 639px) {
+  .prose aside.explainer ol.q-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* FIR report: whitepaper download, the one framed block on the page */
+.prose aside.download {
+  margin-top: 3.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem 2rem;
+  border-radius: 12px;
+  border: 1px solid rgb(var(--accent) / 0.35);
+  background: rgb(var(--accent) / 0.08);
+  padding: 1.75rem 1.75rem 1.875rem;
+}
+.prose aside.download > div {
+  flex: 1 1 22rem;
+}
+.prose aside.download p {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: rgb(var(--fg) / 0.8);
+}
+.prose aside.download .download-kicker {
+  font-family: var(--font-geist-mono, ui-monospace), ui-monospace, monospace;
+  font-size: 12px;
+  color: rgb(var(--accent-ink));
+}
+.prose aside.download .download-title {
+  margin: 0.375rem 0 0.5rem;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  color: rgb(var(--fg));
+}
+.prose aside.download a.btn-accent {
+  text-decoration: none;
+  color: rgb(var(--on-accent));
+}
